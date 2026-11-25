@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, ChevronLeft, Eye, ShieldCheck } from 'lucide-react';
 
-const ABOUT_CLINIC_IMAGE = '/src/assets/images/about_clinic_interior_1795594382732.jpg';
+const ABOUT_CLINIC_IMAGE = `${import.meta.env.BASE_URL}src/assets/images/about_clinic_interior_1795594382732.jpg`;
 
 interface AboutUsPageProps {
   onBack: () => void;
