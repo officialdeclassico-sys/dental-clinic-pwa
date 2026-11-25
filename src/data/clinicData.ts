@@ -71,7 +71,7 @@ export const HERO_BANNERS: HeroBannerItem[] = [
   },
   {
     id: 'banner-preventive',
-    image: '/src/assets/images/hero_banner_preventive_care_1795590488433.jpg',
+    image: `${import.meta.env.BASE_URL}src/assets/images/hero_banner_preventive_care_1795590488433.jpg`,
     imageAlt: 'Friendly dentist holding a dental mirror in a bright clinic',
     actionType: 'treatments',
     text: {
@@ -175,7 +175,7 @@ export const HERO_BANNERS: HeroBannerItem[] = [
   },
 ];
 
-export const OFFER_BANNER_IMAGE = '/src/assets/images/offer_banner_dental_smile_1795590489434.jpg';
+export const OFFER_BANNER_IMAGE = `${import.meta.env.BASE_URL}src/assets/images/offer_banner_dental_smile_1795590489434.jpg`;
 
 export interface TreatmentItem {
   id: TreatmentId;
