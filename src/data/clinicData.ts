@@ -45,7 +45,7 @@ export interface HeroBannerItem {
 export const HERO_BANNERS: HeroBannerItem[] = [
   {
     id: 'banner-happy-smiles',
-    image: '/src/assets/images/hero_banner_happy_smile_1795590336818.jpg',
+    image: `${import.meta.env.BASE_URL}src/assets/images/hero_banner_happy_smile_1795590336818.jpg`,
     imageAlt: 'Happy smiling patient reclining in a blue dental clinic chair',
     actionType: 'book',
     text: {
