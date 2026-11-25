@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CalendarDays, ChevronLeft, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { CLINIC_CONTACT_CONFIG, CLINIC_HOURS, ClinicContactConfig } from '../data/clinicData';
 
-const CONTACT_RECEPTION_IMAGE = '/src/assets/images/contact_clinic_reception_1795595763612.jpg';
+const CONTACT_RECEPTION_IMAGE = `${import.meta.env.BASE_URL}src/assets/images/contact_clinic_reception_1795595763612.jpg`;
 
 interface ContactUsPageProps {
   onBack: () => void;
