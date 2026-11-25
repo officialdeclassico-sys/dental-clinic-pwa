@@ -1,0 +1,8 @@
+{
+  "name": "SmileCare Dental Clinic",
+  "description": "SmileCare Dental Clinic customer-facing mobile homepage for Banjara Hills, Hyderabad with live queue status, treatments, offers, and appointment booking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

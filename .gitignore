@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+
+# Production build outputs
+dist/
+build/
+coverage/
+
+# Environment variables (never commit real secrets or local env files)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production
+.env.production.local
+.env*.local
+!.env.example
+
+# Logs and debug output
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+firebase-debug.log*
+firestore-debug.log*
+
+# Temporary and cache files
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+.eslintcache
+.tsbuildinfo
+public/assets/aistudio/
+
+# IDE and editor files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*~
+
+# Operating system generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Private credentials, certificates, and service accounts
+*service-account*.json
+*serviceAccount*.json
+firebase-adminsdk-*.json
+.firebase/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Hosting / local platform artifacts
+.vercel
+.netlify
