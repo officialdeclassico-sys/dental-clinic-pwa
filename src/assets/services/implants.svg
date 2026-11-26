@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" fill="none">
+  <defs>
+    <linearGradient id="bgSky" x1="0" y1="0" x2="240" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D9F0FF"/>
+      <stop offset="100%" stop-color="#74C6FF"/>
+    </linearGradient>
+    <radialGradient id="crownGrad" cx="38%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#EEF5FF"/>
+      <stop offset="100%" stop-color="#C5DCF7"/>
+    </radialGradient>
+    <linearGradient id="titanium" x1="94" y1="96" x2="146" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E7EEF7"/>
+      <stop offset="35%" stop-color="#9CAFC7"/>
+      <stop offset="70%" stop-color="#DCE5F2"/>
+      <stop offset="100%" stop-color="#6F839C"/>
+    </linearGradient>
+    <linearGradient id="gum" x1="30" y1="128" x2="210" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFABA8"/>
+      <stop offset="50%" stop-color="#F67F85"/>
+      <stop offset="100%" stop-color="#E46472"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="240" height="180" fill="url(#bgSky)"/>
+  <!-- Gum Tissue -->
+  <path d="M0 138c38-18 82-20 120-20s82 2 120 20v42H0v-42Z" fill="url(#gum)"/>
+  <ellipse cx="120" cy="128" rx="44" ry="12" fill="#DC5C6B" fill-opacity="0.45"/>
+
+  <!-- Titanium Implant Post + Threads -->
+  <path d="M104 94h32l-4 66c-.5 6-5 10-12 10s-11.5-4-12-10l-4-66Z" fill="url(#titanium)"/>
+  <rect x="102" y="92" width="36" height="10" rx="4" fill="#B5C4D6"/>
+  <path d="M101 112l38-5M102 124l36-5M103 136l34-5M105 148l30-4M107 159l26-3" stroke="#5E7087" stroke-width="3.2" stroke-linecap="round"/>
+
+  <!-- Ceramic Tooth Crown -->
+  <path d="M88 22c-16 0-28 13-28 31 0 16 7 28 13 38 4 7 12 10 22 10h50c10 0 18-3 22-10 6-10 13-22 13-38 0-18-12-31-28-31-11 0-18 5-24 8-5 3-11 3-16 0-6-3-13-8-24-8Z" fill="url(#crownGrad)" stroke="#FFFFFF" stroke-width="2"/>
+  <path d="M77 38c-7 4-9 13-7 25" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-opacity="0.85"/>
+</svg>

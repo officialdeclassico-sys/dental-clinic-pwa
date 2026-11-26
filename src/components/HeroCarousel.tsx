@@ -103,7 +103,7 @@ export function HeroCarousel({ banners, language, onBannerAction }: HeroCarousel
       onBlurCapture={() => setIsPaused(false)}
     >
       <div
-        className="relative rounded-[24px] overflow-hidden neu-hero-card bg-[#0066F5] select-none touch-pan-y group"
+        className="relative rounded-[24px] overflow-hidden border border-white/85 shadow-[0_8px_22px_rgba(0,95,215,0.22)] bg-[#0066F5] select-none touch-pan-y group"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -203,7 +203,7 @@ export function HeroCarousel({ banners, language, onBannerAction }: HeroCarousel
           type="button"
           onClick={() => goToSlide(activeIndex - 1)}
           aria-label="Previous banner"
-          className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/85 text-[#0E1B3B] items-center justify-center shadow-md opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
+          className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full neu-circle-btn text-[#0E1B3B] items-center justify-center opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
         >
           <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
         </button>
@@ -211,7 +211,7 @@ export function HeroCarousel({ banners, language, onBannerAction }: HeroCarousel
           type="button"
           onClick={() => goToSlide(activeIndex + 1)}
           aria-label="Next banner"
-          className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/85 text-[#0E1B3B] items-center justify-center shadow-md opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
+          className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full neu-circle-btn text-[#0E1B3B] items-center justify-center opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
         >
           <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
         </button>
@@ -233,7 +233,7 @@ export function HeroCarousel({ banners, language, onBannerAction }: HeroCarousel
               aria-selected={isActive}
               aria-label={`Go to slide ${index + 1}`}
               onClick={() => goToSlide(index)}
-              className={`h-[7px] rounded-full transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#0070FF] ${
+              className={`h-[7px] rounded-full neu-press-dot focus-visible:outline-2 focus-visible:outline-[#0070FF] ${
                 isActive ? 'w-5 bg-[#1078FF]' : 'w-[7px] bg-[#B4CEF0] hover:bg-[#8AB6EC]'
               }`}
             />

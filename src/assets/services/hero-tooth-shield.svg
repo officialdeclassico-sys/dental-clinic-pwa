@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" fill="none">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#8CE0FF" stop-opacity="0.7"/>
+      <stop offset="65%" stop-color="#21A6FF" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#0070FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tooth3d" cx="38%" cy="25%" r="72%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#EDF5FF"/>
+      <stop offset="100%" stop-color="#B9D7FA"/>
+    </radialGradient>
+    <linearGradient id="podiumTop" x1="60" y1="162" x2="220" y2="195" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#BCE6FF"/>
+      <stop offset="100%" stop-color="#62BDFF"/>
+    </linearGradient>
+    <linearGradient id="podiumSide" x1="60" y1="176" x2="220" y2="215" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4FB3FF"/>
+      <stop offset="50%" stop-color="#007BFF"/>
+      <stop offset="100%" stop-color="#0055D4"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="34" y1="115" x2="246" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#76DBFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="shieldBg" x1="184" y1="120" x2="238" y2="188" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#58C4FF"/>
+      <stop offset="100%" stop-color="#0066F5"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="140" cy="108" rx="115" ry="92" fill="url(#bgGlow)"/>
+
+  <!-- Podium Base -->
+  <path d="M62 178v24c0 12 35 20 78 20s78-8 78-20v-24H62Z" fill="url(#podiumSide)"/>
+  <ellipse cx="140" cy="178" rx="78" ry="20" fill="url(#podiumTop)" stroke="#E3F4FF" stroke-width="2"/>
+  <ellipse cx="140" cy="176" rx="54" ry="11" fill="#0062E3" fill-opacity="0.22"/>
+
+  <!-- Back Orbital Ring -->
+  <path d="M40 124C32 95 76 74 140 74s108 21 100 50" stroke="url(#ring)" stroke-width="3.2" stroke-opacity="0.55" stroke-linecap="round"/>
+
+  <!-- 3D Glossy Tooth -->
+  <path d="M104 34c-21 0-37 16-37 40 0 21 9 40 14 64 4 21 9 43 22 43 11 0 16-20 23-36 4-9 9-13 14-13s10 4 14 13c7 16 12 36 23 36 13 0 18-22 22-43 5-24 14-43 14-64 0-24-16-40-37-40-14 0-23 6-30 10-5 3-13 3-18 0-7-4-16-10-30-10Z" fill="url(#tooth3d)" stroke="#FFFFFF" stroke-width="2.5"/>
+  <!-- Tooth Specular Highlight -->
+  <path d="M90 52c-9 3-14 13-13 28 1 9 3 16 5 22" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-opacity="0.82"/>
+
+  <!-- Front Orbital Ring -->
+  <path d="M36 116c8 26 54 38 108 32 54-6 96-28 96-46" stroke="url(#ring)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Shield Check Badge -->
+  <path d="M210 116l-29 11v24c0 20 12.5 34 29 41 16.5-7 29-21 29-41v-24l-29-11Z" fill="#FFFFFF" stroke="#E0F1FF" stroke-width="3"/>
+  <path d="M210 122l-23 9v20c0 16 10 27 23 33 13-6 23-17 23-33v-20l-23-9Z" fill="url(#shieldBg)"/>
+  <path d="M198 152l8.5 8.5L224 143" stroke="#FFFFFF" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Sparkles -->
+  <path d="M44 74l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#FFFFFF" fill-opacity="0.9"/>
+  <path d="M235 48l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5 2.5-6Z" fill="#FFFFFF" fill-opacity="0.9"/>
+  <circle cx="62" cy="116" r="3" fill="#FFFFFF" fill-opacity="0.85"/>
+</svg>

@@ -66,7 +66,7 @@ export function BottomNav({ activeTab, labels, onSelectTab }: BottomNavProps) {
   return (
     <nav
       aria-label="Primary Bottom Navigation"
-      className="fixed bottom-0 left-0 right-0 z-40 w-full bg-white border-t border-[#DAE7F7] shadow-[0_-4px_18px_rgba(128,162,210,0.18)] pb-safe-nav"
+      className="fixed bottom-0 left-0 right-0 z-40 w-full bg-white/95 backdrop-blur-md border-t border-white shadow-[0_-4px_16px_rgba(148,180,218,0.16)] pb-safe-nav"
     >
       <div className="w-full max-w-[1440px] mx-auto grid grid-cols-4 h-[62px] md:h-[68px]">
         {tabs.map((tab) => {
@@ -77,7 +77,7 @@ export function BottomNav({ activeTab, labels, onSelectTab }: BottomNavProps) {
               type="button"
               onClick={() => onSelectTab(tab.id)}
               aria-current={isActive ? 'page' : undefined}
-              className="relative flex flex-col items-center justify-center gap-1 min-h-[48px] px-1 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+              className="relative flex flex-col items-center justify-center gap-1 min-h-[48px] neu-press-nav focus-visible:outline-2 focus-visible:outline-[#0070FF]"
             >
               {tab.renderIcon(isActive)}
               <span
@@ -89,7 +89,7 @@ export function BottomNav({ activeTab, labels, onSelectTab }: BottomNavProps) {
               </span>
               {isActive && (
                 <span
-                  className="absolute bottom-0 w-12 md:w-16 h-[3px] rounded-t-full bg-[#0070FF]"
+                  className="absolute bottom-0 w-10 md:w-14 h-[3px] rounded-t-full bg-[#0070FF]"
                   aria-hidden="true"
                 />
               )}

@@ -140,14 +140,14 @@ export function BookingCalendarPicker({
                   onClick={() => onSelectDate(iso)}
                   aria-label={iso}
                   aria-pressed={isSelected}
-                  className={`h-9 sm:h-10 rounded-[11px] text-[12.5px] sm:text-[13px] font-bold tabular-nums transition-all flex flex-col items-center justify-center ${
+                  className={`h-9 sm:h-10 rounded-[11px] text-[12.5px] sm:text-[13px] font-bold tabular-nums flex flex-col items-center justify-center ${
                     isSelected
-                      ? 'bg-[#0070FF] text-white shadow-[0_4px_10px_rgba(0,112,255,0.34)]'
+                      ? 'neu-blue-btn text-white'
                       : disabled
                         ? 'text-[#9FB2CC] bg-[#EAF2FB]/60 cursor-not-allowed'
                         : isToday
-                          ? 'bg-white text-[#0070FF] border-2 border-[#0070FF]'
-                          : 'bg-white text-[#0E1B3B] border border-[#DCE8F8] hover:border-[#0070FF]'
+                          ? 'bg-[#E8F2FE] border-2 border-[#0070FF] text-[#0070FF] neu-press-surface'
+                          : 'bg-white/85 border border-white text-[#0E1B3B] hover:bg-[#EBF4FF] shadow-[0_2px_6px_rgba(140,174,216,0.18)] neu-press-surface'
                   }`}
                 >
                   <span>{dayNum}</span>
@@ -216,7 +216,7 @@ export function BookingCalendarPicker({
               {slotsError}
             </div>
           ) : slots.length === 0 ? (
-            <div className="rounded-[14px] bg-white border border-[#DCE8F8] p-4 text-center text-[12.5px] font-semibold text-[#425478]">
+            <div className="rounded-[14px] bg-white/85 border border-white p-4 text-center text-[12.5px] font-semibold text-[#425478]">
               No open slots are available for the selected date. Please choose another day.
             </div>
           ) : (
@@ -229,12 +229,12 @@ export function BookingCalendarPicker({
                     type="button"
                     disabled={!slot.available}
                     onClick={() => onSelectSlot?.(slot)}
-                    className={`rounded-[13px] px-3 py-2.5 text-left border transition-all ${
+                    className={`rounded-[13px] px-3 py-2.5 text-left ${
                       isPicked
-                        ? 'bg-[#0070FF] text-white border-[#0070FF] shadow-[0_4px_12px_rgba(0,112,255,0.3)]'
+                        ? 'neu-blue-btn text-white'
                         : !slot.available
-                          ? 'bg-[#EAF1FA] text-[#90A4C0] border-[#D7E3F3] cursor-not-allowed'
-                          : 'bg-white text-[#0E1B3B] border-[#D3E3F7] hover:border-[#0070FF]'
+                          ? 'bg-[#EAF1FA] text-[#90A4C0] border border-[#D7E3F3] cursor-not-allowed'
+                          : 'bg-white/85 border border-white text-[#0E1B3B] hover:bg-[#EBF4FF] shadow-[0_2px_6px_rgba(140,174,216,0.18)] neu-press-surface'
                     }`}
                   >
                     <span className="block text-[13px] font-extrabold tabular-nums">

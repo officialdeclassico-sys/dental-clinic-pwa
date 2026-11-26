@@ -48,7 +48,7 @@ export function TreatmentsSection({
         <button
           type="button"
           onClick={onViewAll}
-          className="inline-flex items-center gap-0.5 text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-bold text-[#0070FF] hover:text-[#0052D4] whitespace-nowrap shrink-0 py-1 pl-2 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+          className="inline-flex items-center gap-0.5 text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-bold text-[#0070FF] hover:text-[#0052D4] whitespace-nowrap shrink-0 py-1 pl-2 rounded-[10px] neu-press-soft focus-visible:outline-2 focus-visible:outline-[#0070FF]"
         >
           <span>{viewAllLabel}</span>
           <ChevronRight className="w-4 h-4 md:w-[18px] md:h-[18px] -ml-0.5" strokeWidth={2.8} />

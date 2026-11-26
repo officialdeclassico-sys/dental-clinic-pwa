@@ -251,7 +251,7 @@ export function ContactUsPage({
         {/* Hero Banner */}
         <section
           aria-label="Get in Touch with SmileCare"
-          className="relative rounded-[22px] md:rounded-[26px] neu-hero-card overflow-hidden h-[190px] sm:h-[222px] md:h-[264px] lg:h-[296px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
+          className="relative rounded-[22px] md:rounded-[26px] border border-white/85 shadow-[0_8px_20px_rgba(0,95,215,0.22)] overflow-hidden h-[190px] sm:h-[222px] md:h-[264px] lg:h-[296px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
         >
           {!imgError && (
             <img
@@ -314,7 +314,7 @@ export function ContactUsPage({
             <button
               type="button"
               onClick={() => setMissingSettingNotice(null)}
-              className="text-[11.5px] font-extrabold text-[#0070FF] shrink-0 px-2 py-1"
+              className="text-[11.5px] font-extrabold text-[#0070FF] shrink-0 px-2 py-1 rounded-[8px] neu-press-soft"
             >
               Dismiss
             </button>
@@ -417,7 +417,7 @@ export function ContactUsPage({
           className="neu-card rounded-[20px] md:rounded-[24px] p-3.5 sm:p-4 md:p-5 flex items-center justify-between gap-3 md:gap-5"
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-[14px] neu-card flex items-center justify-center text-[#0070FF] shrink-0">
+            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-[14px] bg-gradient-to-br from-[#F8FBFF] to-[#EAF2FC] border-[1.5px] border-white shadow-[-2px_-2px_6px_rgba(255,255,255,0.9),3px_4px_10px_rgba(140,174,216,0.28)] flex items-center justify-center text-[#0070FF] shrink-0">
               <MapPin className="w-6 h-6" strokeWidth={2.2} />
             </div>
             <div className="min-w-0">
@@ -463,7 +463,7 @@ export function ContactUsPage({
             {CLINIC_HOURS.map((row) => (
               <div
                 key={row.day}
-                className="rounded-full bg-gradient-to-b from-[#F9FCFF] to-[#EEF5FD] border border-white/90 shadow-[0_2px_6px_rgba(145,177,218,0.28),_inset_0_1px_0_rgba(255,255,255,0.95)] px-3.5 sm:px-4.5 py-2 flex items-center justify-between gap-2"
+                className="rounded-full bg-[#F5FAFF] border border-white shadow-[0_2px_6px_rgba(140,174,216,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] px-3.5 sm:px-4.5 py-2 flex items-center justify-between gap-2"
               >
                 <div className="flex items-center gap-2.5 w-[44%] min-w-0">
                   <CalendarDays className="w-4 h-4 text-[#0070FF] shrink-0" strokeWidth={2.1} />

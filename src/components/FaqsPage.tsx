@@ -186,7 +186,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
         {/* Hero Banner */}
         <section
           aria-label="Frequently Asked Questions"
-          className="relative rounded-[22px] md:rounded-[26px] neu-hero-card overflow-hidden h-[192px] sm:h-[224px] md:h-[260px] lg:h-[285px] bg-gradient-to-br from-[#28B0FF] via-[#0776FF] to-[#0055DF]"
+          className="relative rounded-[22px] md:rounded-[26px] border border-white/85 shadow-[0_8px_20px_rgba(0,95,215,0.22)] overflow-hidden h-[192px] sm:h-[224px] md:h-[260px] lg:h-[285px] bg-gradient-to-br from-[#28B0FF] via-[#0776FF] to-[#0055DF]"
         >
           {/* Curved Electric-Blue Left Wave */}
           <svg
@@ -246,7 +246,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
               type="button"
               onClick={() => setSearchQuery('')}
               aria-label="Clear search"
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[#425478] hover:text-[#0E1B3B]"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[#425478] hover:text-[#0E1B3B] neu-press-soft"
             >
               <X className="w-4 h-4" />
             </button>
@@ -271,7 +271,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
                 className={`rounded-full px-3.5 py-1.5 text-[12px] sm:text-[13px] font-bold whitespace-nowrap shrink-0 transition-all duration-150 focus-visible:outline-2 focus-visible:outline-[#0070FF] ${
                   isActive
                     ? 'neu-blue-btn text-white'
-                    : 'neu-card text-[#1B2D52] hover:text-[#0070FF]'
+                    : 'neu-card-interactive text-[#1B2D52] hover:text-[#0070FF]'
                 }`}
               >
                 {category}
@@ -310,10 +310,10 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => toggleQuestion(item.id)}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2.5 text-left focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2.5 text-left neu-press-surface focus-visible:outline-2 focus-visible:outline-[#0070FF]"
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[12px] neu-card flex items-center justify-center text-[#0070FF] shrink-0">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[12px] bg-gradient-to-br from-[#F8FBFF] to-[#EAF2FC] border-[1.5px] border-white shadow-[-2px_-2px_6px_rgba(255,255,255,0.9),3px_4px_10px_rgba(140,174,216,0.28)] flex items-center justify-center text-[#0070FF] shrink-0">
                         {renderFaqIcon(item.iconType)}
                       </div>
                       <span className="text-[13.5px] sm:text-[15px] md:text-[16px] font-extrabold text-[#0E1B3B] leading-snug">
@@ -353,7 +353,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
           className="neu-card rounded-[20px] md:rounded-[24px] p-3.5 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3"
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-[14px] neu-card flex items-center justify-center text-[#0070FF] shrink-0">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-[14px] bg-gradient-to-br from-[#F8FBFF] to-[#EAF2FC] border-[1.5px] border-white shadow-[-2px_-2px_6px_rgba(255,255,255,0.9),3px_4px_10px_rgba(140,174,216,0.28)] flex items-center justify-center text-[#0070FF] shrink-0">
               <Headphones className="w-6 h-6" strokeWidth={2.1} />
             </div>
 

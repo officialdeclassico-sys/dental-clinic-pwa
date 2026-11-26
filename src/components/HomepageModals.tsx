@@ -131,7 +131,7 @@ export function HomepageModals({
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-[460px] rounded-t-[26px] sm:rounded-[26px] bg-[#F4F8FE] border border-white shadow-[0_-8px_32px_rgba(14,27,59,0.22)] p-5 pb-6 max-h-[86vh] overflow-y-auto"
+        className="w-full sm:max-w-[460px] rounded-t-[26px] sm:rounded-[26px] bg-[#F4F9FF] border border-white/95 shadow-[0_20px_50px_rgba(14,27,59,0.3)] p-5 pb-6 max-h-[86vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-10 h-1 rounded-full bg-[#C4D6ED] mx-auto mb-3 sm:hidden" aria-hidden="true" />
@@ -156,7 +156,7 @@ export function HomepageModals({
 
             <p className="text-[12.5px] font-semibold text-[#425478] mt-1">{branchName}</p>
 
-            <div className="mt-4 rounded-[18px] bg-white border border-[#DCE8F8] p-4 grid grid-cols-3 gap-2 text-center">
+            <div className="mt-4 rounded-[18px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] p-4 grid grid-cols-3 gap-2 text-center">
               <div>
                 <span className="block text-[11px] font-bold text-[#425478]">{t.nowServing}</span>
                 <span className="block text-[22px] font-extrabold text-[#0070FF] tabular-nums mt-0.5">
@@ -200,7 +200,7 @@ export function HomepageModals({
                   value={tokenInput}
                   onChange={(e) => setTokenInput(e.target.value)}
                   placeholder="A023"
-                  className="flex-1 h-10 rounded-[12px] bg-white border border-[#C6DAF3] px-3 text-[13.5px] font-bold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
+                  className="flex-1 h-10 rounded-[12px] bg-white border border-[#D4E2F4] px-3 text-[13.5px] font-bold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
                 />
                 <button
                   type="submit"
@@ -220,8 +220,8 @@ export function HomepageModals({
                     }}
                     className={`px-2.5 py-1 rounded-full text-[11.5px] font-bold border ${
                       userToken === preset
-                        ? 'bg-[#0070FF] text-white border-[#0070FF]'
-                        : 'bg-white text-[#1A2B50] border-[#D0E1F5]'
+                        ? 'bg-[#0070FF] border-[#0070FF] text-white neu-press-solid-blue'
+                        : 'bg-white border-[#D4E2F4] text-[#1A2B50] hover:bg-[#EFF6FF] neu-press-surface'
                     }`}
                   >
                     {preset}
@@ -230,7 +230,7 @@ export function HomepageModals({
                 <button
                   type="button"
                   onClick={onAdvanceQueue}
-                  className="ml-auto px-3 py-1 rounded-full text-[11.5px] font-bold bg-[#E2EEFD] text-[#0066F5] hover:bg-[#D2E4FB]"
+                  className="ml-auto px-3 py-1 rounded-full text-[11.5px] font-bold bg-white border border-[#BDDCFF] hover:bg-[#EFF6FF] text-[#0066F5] neu-press-surface"
                 >
                   {t.simulateNextBtn}
                 </button>
@@ -264,7 +264,7 @@ export function HomepageModals({
             )}
 
             {bookingConfirmed ? (
-              <div className="mt-5 rounded-[18px] bg-white border border-[#D4E6FA] p-5 text-center">
+              <div className="mt-5 rounded-[18px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] p-5 text-center">
                 <CheckCircle2 className="w-11 h-11 text-[#0070FF] mx-auto" />
                 <h4 className="text-[16px] font-extrabold text-[#0E1B3B] mt-2.5">
                   {t.bookingConfirmedTitle}
@@ -292,7 +292,7 @@ export function HomepageModals({
                   <select
                     value={selectedTreatment}
                     onChange={(e) => setSelectedTreatment(e.target.value as TreatmentId)}
-                    className="w-full h-10 rounded-[12px] bg-white border border-[#C6DAF3] px-3 text-[13px] font-bold text-[#0E1B3B]"
+                    className="w-full h-10 rounded-[12px] bg-white border border-[#D4E2F4] px-3 text-[13px] font-bold text-[#0E1B3B]"
                   >
                     {treatments.map((tr) => (
                       <option key={tr.id} value={tr.id}>
@@ -314,8 +314,8 @@ export function HomepageModals({
                         onClick={() => setSelectedSlot(slot)}
                         className={`px-3 py-1.5 rounded-full text-[11.5px] font-bold border ${
                           selectedSlot === slot
-                            ? 'bg-[#0070FF] text-white border-[#0070FF]'
-                            : 'bg-white text-[#1A2B50] border-[#D0E1F5]'
+                            ? 'bg-[#0070FF] border-[#0070FF] text-white neu-press-solid-blue'
+                            : 'bg-white border-[#D4E2F4] text-[#1A2B50] hover:bg-[#EFF6FF] neu-press-surface'
                         }`}
                       >
                         {slot}
@@ -335,7 +335,7 @@ export function HomepageModals({
                       value={patientName}
                       onChange={(e) => setPatientName(e.target.value)}
                       placeholder="Aarav Sharma"
-                      className="w-full h-10 rounded-[12px] bg-white border border-[#C6DAF3] px-3 text-[13px] font-semibold text-[#0E1B3B]"
+                      className="w-full h-10 rounded-[12px] bg-white border border-[#D4E2F4] px-3 text-[13px] font-semibold text-[#0E1B3B]"
                     />
                   </div>
                   <div>
@@ -348,7 +348,7 @@ export function HomepageModals({
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98490 12345"
-                      className="w-full h-10 rounded-[12px] bg-white border border-[#C6DAF3] px-3 text-[13px] font-semibold text-[#0E1B3B]"
+                      className="w-full h-10 rounded-[12px] bg-white border border-[#D4E2F4] px-3 text-[13px] font-semibold text-[#0E1B3B]"
                     />
                   </div>
                 </div>
@@ -398,7 +398,7 @@ export function HomepageModals({
                 <span>{item.priceNote}</span>
               </div>
 
-              <ul className="mt-3 space-y-1.5 bg-white rounded-[16px] p-3.5 border border-[#DCE8F8]">
+              <ul className="mt-3 space-y-1.5 bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] rounded-[16px] p-3.5">
                 {copy.highlights.map((hl) => (
                   <li key={hl} className="text-[12.5px] font-semibold text-[#1A2B50] flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#0070FF] shrink-0" />
@@ -444,7 +444,7 @@ export function HomepageModals({
                     key={tr.id}
                     type="button"
                     onClick={() => onSelectTreatment(tr.id)}
-                    className="w-full text-left rounded-[16px] bg-white border border-[#DCE8F8] p-3.5 hover:border-[#0070FF] transition-colors"
+                    className="w-full text-left rounded-[16px] bg-white/85 border border-white hover:bg-[#EFF6FF] shadow-[0_3px_10px_rgba(140,174,216,0.18)] neu-press-surface p-3.5"
                   >
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[14px] font-extrabold text-[#0E1B3B]">
@@ -481,7 +481,7 @@ export function HomepageModals({
               {t.shortcuts[modal.shortcutId]}
             </h3>
 
-            <div className="mt-3 rounded-[16px] bg-white border border-[#DCE8F8] p-4 text-[13px] text-[#35486E] space-y-2 leading-relaxed">
+            <div className="mt-3 rounded-[16px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] p-4 text-[13px] text-[#35486E] space-y-2 leading-relaxed">
               {modal.shortcutId === 'about' && (
                 <>
                   <p className="font-bold text-[#0E1B3B]">{t.clinicName}</p>
@@ -553,15 +553,17 @@ export function HomepageModals({
               </button>
             </div>
 
-            <div className="mt-3 flex items-center gap-2.5">
-              <Calendar className="w-5 h-5 text-[#0070FF]" />
-              <h3 className="text-[19px] font-extrabold text-[#0E1B3B]">{t.nav[modal.tabId]}</h3>
-            </div>
+            <div className="mt-3 rounded-[16px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] p-4">
+              <div className="flex items-center gap-2.5">
+                <Calendar className="w-5 h-5 text-[#0070FF]" />
+                <h3 className="text-[19px] font-extrabold text-[#0E1B3B]">{t.nav[modal.tabId]}</h3>
+              </div>
 
-            <p className="mt-2 text-[13px] text-[#3B4E75] leading-relaxed">
-              The dedicated {t.nav[modal.tabId]} screen is planned for the next phase. You can book
-              an appointment or explore treatments directly from the homepage right now.
-            </p>
+              <p className="mt-2 text-[13px] text-[#3B4E75] leading-relaxed">
+                The dedicated {t.nav[modal.tabId]} screen is planned for the next phase. You can book
+                an appointment or explore treatments directly from the homepage right now.
+              </p>
+            </div>
 
             <div className="mt-4 flex items-center gap-2.5">
               <button
@@ -574,7 +576,7 @@ export function HomepageModals({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-full bg-white border border-[#C9DCF4] text-[13px] font-bold text-[#0E1B3B]"
+                className="px-5 py-2.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#EFF6FF] text-[13px] font-bold text-[#0E1B3B] neu-press-surface"
               >
                 {t.close}
               </button>

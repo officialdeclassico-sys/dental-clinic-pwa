@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AboutUsPage } from './components/AboutUsPage';
+import { AddReviewPage } from './components/AddReviewPage';
 import {
   AppointmentHistoryView,
   CancelRescheduleView,
@@ -16,6 +17,8 @@ import { HeroCarousel } from './components/HeroCarousel';
 import { ActiveModalState, HomepageModals } from './components/HomepageModals';
 import { LiveQueueCard } from './components/LiveQueueCard';
 import { NewPatientOfferBanner } from './components/NewPatientOfferBanner';
+import { ReviewsPage } from './components/ReviewsPage';
+import { ServicesPage } from './components/ServicesPage';
 import { ShortcutCards } from './components/ShortcutCards';
 import { TreatmentsSection } from './components/TreatmentsSection';
 import {
@@ -35,12 +38,17 @@ import {
   TREATMENTS,
   UI_STRINGS,
 } from './data/clinicData';
+import { ReviewRecord, fetchReviews } from './data/reviewsRepository';
+import { ServiceCatalogItem } from './data/servicesData';
 
 type PageId =
   | 'home'
   | 'about'
   | 'contact'
   | 'faqs'
+  | 'reviews'
+  | 'add-review'
+  | 'services'
   | 'appointments'
   | 'booking'
   | 'my-appointments'
@@ -73,8 +81,14 @@ export default function App() {
   const [bookingTreatment, setBookingTreatment] = useState<BookingTreatmentId | undefined>(
     undefined
   );
+  const [bookingService, setBookingService] = useState<ServiceCatalogItem | null>(null);
   const [bookingApplyOffer, setBookingApplyOffer] = useState<boolean>(false);
   const [rescheduleTargetId, setRescheduleTargetId] = useState<string | null>(null);
+
+  // Reviews state
+  const [reviews, setReviews] = useState<ReviewRecord[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState<boolean>(true);
+  const [justPublishedReview, setJustPublishedReview] = useState<boolean>(false);
 
   const currentPage = pageStack[pageStack.length - 1] ?? 'home';
   const t = UI_STRINGS[language];
@@ -88,9 +102,19 @@ export default function App() {
     }
   }, []);
 
+  const refreshReviews = useCallback(async () => {
+    try {
+      const list = await fetchReviews();
+      setReviews(list);
+    } finally {
+      setReviewsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     refreshAppointments();
-  }, [refreshAppointments]);
+    refreshReviews();
+  }, [refreshAppointments, refreshReviews]);
 
   // Simulated real-time queue progression (loops cleanly in realistic range)
   useEffect(() => {
@@ -105,6 +129,9 @@ export default function App() {
     if (page === 'about') {
       setAboutVisitId((prev) => prev + 1);
     }
+    if (page !== 'reviews') {
+      setJustPublishedReview(false);
+    }
     setPageStack((prev) => [...prev, page]);
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
@@ -114,8 +141,13 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
-  const openBookingFlow = (treatmentId?: BookingTreatmentId, applyOffer = false) => {
-    setBookingTreatment(treatmentId);
+  const openBookingFlow = (
+    treatmentId?: BookingTreatmentId,
+    applyOffer = false,
+    serviceItem: ServiceCatalogItem | null = null
+  ) => {
+    setBookingService(serviceItem);
+    setBookingTreatment(serviceItem ? serviceItem.bookingTreatmentId : treatmentId);
     setBookingApplyOffer(applyOffer);
     navigateTo('booking');
   };
@@ -138,7 +170,12 @@ export default function App() {
   };
 
   const handleSelectShortcut = (shortcutId: ShortcutId) => {
-    if (shortcutId === 'about' || shortcutId === 'contact' || shortcutId === 'faqs') {
+    if (
+      shortcutId === 'about' ||
+      shortcutId === 'contact' ||
+      shortcutId === 'faqs' ||
+      shortcutId === 'reviews'
+    ) {
       navigateTo(shortcutId);
       return;
     }
@@ -158,15 +195,23 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
+    if (tabId === 'services') {
+      setModal({ type: 'none' });
+      setPageStack(['home', 'services']);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
     setModal({ type: 'navPlaceholder', tabId });
   };
 
   const activeNavTab: NavTabId =
     modal.type === 'navPlaceholder'
       ? modal.tabId
-      : APPOINTMENT_PAGES.includes(currentPage)
-        ? 'appointments'
-        : 'home';
+      : currentPage === 'services'
+        ? 'services'
+        : APPOINTMENT_PAGES.includes(currentPage)
+          ? 'appointments'
+          : 'home';
 
   return (
     <div className="app-container min-h-screen w-full overflow-x-clip bg-[#E6F1FC] text-[#0E1B3B] flex flex-col">
@@ -179,6 +224,45 @@ export default function App() {
           <FaqsPage
             onBack={navigateBack}
             onContactUs={() => navigateTo('contact')}
+          />
+        ) : currentPage === 'reviews' ? (
+          <ReviewsPage
+            reviews={reviews}
+            loading={reviewsLoading}
+            justPublished={justPublishedReview}
+            onDismissJustPublished={() => setJustPublishedReview(false)}
+            onBack={navigateBack}
+            onAddReview={() => navigateTo('add-review')}
+          />
+        ) : currentPage === 'add-review' ? (
+          <AddReviewPage
+            onBack={navigateBack}
+            onReviewSubmitted={(newReview) => {
+              setReviews((prev) => [
+                newReview,
+                ...prev.filter((r) => r.reviewId !== newReview.reviewId),
+              ]);
+              setJustPublishedReview(true);
+              setPageStack((prev) => {
+                const withoutAdd = prev.filter((p) => p !== 'add-review');
+                if (withoutAdd[withoutAdd.length - 1] === 'reviews') {
+                  return withoutAdd;
+                }
+                return [...withoutAdd, 'reviews'];
+              });
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }}
+          />
+        ) : currentPage === 'services' ? (
+          <ServicesPage
+            onBack={navigateBack}
+            onBookAppointment={(serviceItem) =>
+              openBookingFlow(
+                serviceItem?.bookingTreatmentId,
+                false,
+                serviceItem ?? null
+              )
+            }
           />
         ) : currentPage === 'appointments' ? (
           <AppointmentsPage
@@ -197,6 +281,7 @@ export default function App() {
         ) : currentPage === 'booking' ? (
           <BookingFlowView
             initialTreatmentId={bookingTreatment}
+            preselectedService={bookingService}
             applyOffer={bookingApplyOffer}
             onBack={navigateBack}
             onDoneToAppointments={() => {

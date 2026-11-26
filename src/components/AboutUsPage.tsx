@@ -196,7 +196,7 @@ export function AboutUsPage({ onBack, visitId }: AboutUsPageProps) {
       {/* Hero Banner */}
       <section
         aria-label="About SmileCare Dental Clinic"
-        className="relative rounded-[22px] md:rounded-[26px] neu-hero-card overflow-hidden h-[194px] sm:h-[225px] md:h-[268px] lg:h-[300px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
+        className="relative rounded-[22px] md:rounded-[26px] border border-white/85 shadow-[0_8px_20px_rgba(0,95,215,0.22)] overflow-hidden h-[194px] sm:h-[225px] md:h-[268px] lg:h-[300px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
       >
         {!imgError && (
           <img
@@ -297,7 +297,7 @@ export function AboutUsPage({ onBack, visitId }: AboutUsPageProps) {
         aria-label="Our Mission"
         className="neu-card rounded-[20px] md:rounded-[24px] p-3.5 sm:p-4 md:p-5 flex items-center gap-3.5 sm:gap-4"
       >
-        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-[16px] neu-card flex items-center justify-center text-[#0070FF] shrink-0">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-[16px] bg-gradient-to-br from-[#F8FBFF] to-[#EAF2FC] border-[1.5px] border-white shadow-[-2px_-2px_6px_rgba(255,255,255,0.9),3px_4px_10px_rgba(140,174,216,0.28)] flex items-center justify-center text-[#0070FF] shrink-0">
           <TargetArrowIcon className="w-8 h-8 md:w-9 md:h-9" />
         </div>
         <div className="min-w-0">
@@ -315,7 +315,7 @@ export function AboutUsPage({ onBack, visitId }: AboutUsPageProps) {
         aria-label="Our Vision"
         className="neu-card rounded-[20px] md:rounded-[24px] p-3.5 sm:p-4 md:p-5 flex items-center gap-3.5 sm:gap-4"
       >
-        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-[16px] neu-card flex items-center justify-center text-[#0070FF] shrink-0">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-[16px] bg-gradient-to-br from-[#F8FBFF] to-[#EAF2FC] border-[1.5px] border-white shadow-[-2px_-2px_6px_rgba(255,255,255,0.9),3px_4px_10px_rgba(140,174,216,0.28)] flex items-center justify-center text-[#0070FF] shrink-0">
           <Eye className="w-8 h-8 md:w-9 md:h-9" strokeWidth={2.1} />
         </div>
         <div className="min-w-0">

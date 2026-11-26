@@ -450,6 +450,7 @@ export async function fetchSlotAvailability(params: {
 export async function createAppointment(input: {
   branchId: string;
   treatmentId: BookingTreatmentId;
+  treatmentNameOverride?: string;
   dentistId: string;
   appointmentDate: string;
   startTime: string;
@@ -498,7 +499,7 @@ export async function createAppointment(input: {
     branchId: branch.branchId,
     branchName: branch.name,
     treatmentId: service.treatmentId,
-    treatmentName: service.name,
+    treatmentName: input.treatmentNameOverride?.trim() || service.name,
     dentistId: dentist.dentistId,
     dentistName: dentist.name,
     appointmentDate: input.appointmentDate,

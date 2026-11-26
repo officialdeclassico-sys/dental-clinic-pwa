@@ -179,7 +179,7 @@ export function AppointmentsPage({
         {/* Hero Banner */}
         <section
           aria-label="Book Your Dental Appointment"
-          className="relative rounded-[22px] md:rounded-[26px] neu-hero-card overflow-hidden h-[194px] sm:h-[225px] md:h-[268px] lg:h-[300px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
+          className="relative rounded-[22px] md:rounded-[26px] border border-white/85 shadow-[0_8px_20px_rgba(0,95,215,0.22)] overflow-hidden h-[194px] sm:h-[225px] md:h-[268px] lg:h-[300px] bg-gradient-to-br from-[#1FA2FF] via-[#0771FF] to-[#0052DC]"
         >
           {!heroImgError && (
             <img
@@ -316,19 +316,19 @@ export function AppointmentsPage({
             <button
               type="button"
               onClick={onOpenMyAppointments}
-              className="text-[13.5px] sm:text-[14.5px] font-bold text-[#0070FF] hover:underline"
+              className="text-[13.5px] sm:text-[14.5px] font-bold text-[#0070FF] hover:underline rounded-[8px] neu-press-soft px-1.5 py-0.5"
             >
               View All
             </button>
           </div>
 
           {loading ? (
-            <div className="mt-3 rounded-[16px] bg-white border border-white p-5 flex items-center justify-center gap-2 text-[#425478]">
+            <div className="mt-3 rounded-[16px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.2)] p-5 flex items-center justify-center gap-2 text-[#425478]">
               <Loader2 className="w-5 h-5 text-[#0070FF] animate-spin" />
               <span className="text-[13px] font-semibold">Loading upcoming visit...</span>
             </div>
           ) : nearestUpcoming && dateParts ? (
-            <div className="mt-3 rounded-[16px] md:rounded-[18px] bg-white border border-white shadow-[0_4px_12px_rgba(145,177,218,0.2)] p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3.5">
+            <div className="mt-3 rounded-[16px] md:rounded-[18px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.2)] p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3.5">
               {/* Date Box */}
               <div className="w-[62px] sm:w-[72px] rounded-[13px] bg-[#E8F1FD] py-2 px-1.5 text-center shrink-0">
                 <span className="block text-[11px] sm:text-[12px] font-bold text-[#1A2B50] leading-tight">
@@ -393,14 +393,14 @@ export function AppointmentsPage({
                 <button
                   type="button"
                   onClick={() => onOpenCancelReschedule(nearestUpcoming.appointmentId)}
-                  className="px-3 sm:px-3.5 py-1 rounded-full bg-white border border-[#7EB9FF] text-[#0070FF] text-[11.5px] sm:text-[12.5px] font-bold hover:bg-[#EDF5FF] transition-colors"
+                  className="px-3 sm:px-3.5 py-1.5 rounded-full bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[11.5px] sm:text-[12.5px] font-bold shadow-[0_2px_6px_rgba(0,112,255,0.12)] neu-press-surface"
                 >
                   Reschedule
                 </button>
               </div>
             </div>
           ) : (
-            <div className="mt-3 rounded-[16px] bg-white border border-white p-4 text-center space-y-2.5">
+            <div className="mt-3 rounded-[16px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.2)] p-4 text-center space-y-2.5">
               <p className="text-[13px] font-bold text-[#425478]">
                 No upcoming appointments scheduled.
               </p>

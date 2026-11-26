@@ -228,7 +228,7 @@ export function MyAppointmentsView({
                       <button
                         type="button"
                         onClick={() => onOpenCancelReschedule(apt.appointmentId)}
-                        className="px-3 py-1.5 rounded-full bg-white border border-[#8ABDFB] text-[#0070FF] text-[12px] font-bold hover:bg-[#EDF5FF]"
+                        className="px-3.5 py-1.5 rounded-full bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[12px] font-bold neu-press-surface"
                       >
                         Reschedule / Cancel
                       </button>
@@ -237,7 +237,7 @@ export function MyAppointmentsView({
                         onClick={() =>
                           setExpandedId(isExpanded ? null : apt.appointmentId)
                         }
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#E8F1FD] text-[#0E1B3B] text-[12px] font-bold"
+                        className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
                       >
                         <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
                         {isExpanded ? (
@@ -369,7 +369,7 @@ export function AppointmentHistoryView({
                       onClick={() =>
                         setExpandedId(isExpanded ? null : apt.appointmentId)
                       }
-                      className="mt-2.5 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8F1FD] text-[#0E1B3B] text-[12px] font-bold"
+                      className="mt-2.5 inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
                     >
                       <span>{isExpanded ? 'Hide Details' : 'Appointment Details'}</span>
                       {isExpanded ? (
@@ -630,10 +630,10 @@ export function RemindersView({
                     disabled={busy}
                     onClick={() => handleToggleReminder(apt)}
                     aria-pressed={apt.reminderEnabled}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-extrabold transition-colors ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-extrabold ${
                       apt.reminderEnabled
-                        ? 'bg-[#0070FF] text-white'
-                        : 'bg-[#EAF1FA] text-[#425478]'
+                        ? 'neu-blue-btn text-white'
+                        : 'bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] neu-press-surface'
                     }`}
                   >
                     {apt.reminderEnabled ? (
@@ -666,10 +666,10 @@ export function RemindersView({
                         type="button"
                         disabled={busy}
                         onClick={() => handleChangeLeadTime(apt, lead)}
-                        className={`px-3 py-1 rounded-full text-[11.5px] font-bold border ${
+                        className={`px-3 py-1.5 rounded-full text-[11.5px] font-bold ${
                           active
-                            ? 'bg-[#E3F0FF] border-[#0070FF] text-[#0070FF]'
-                            : 'bg-white border-[#D3E3F7] text-[#425478]'
+                            ? 'bg-[#0070FF] text-white shadow-[0_3px_8px_rgba(0,112,255,0.25)] neu-press-solid-blue'
+                            : 'bg-[#F5FAFF] border border-[#C8DAF0] text-[#425478] hover:border-[#8BC0FB] neu-press-surface'
                         }`}
                       >
                         {label}
@@ -888,8 +888,8 @@ export function CancelRescheduleView({
                 return (
                   <div
                     key={apt.appointmentId}
-                    className={`neu-card rounded-[20px] p-3.5 sm:p-4 border transition-all ${
-                      isSelected ? 'border-[#0070FF]' : 'border-transparent'
+                    className={`rounded-[20px] p-3.5 sm:p-4 transition-all ${
+                      isSelected ? 'neu-card !border-[#0070FF]' : 'neu-card'
                     }`}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-2">
@@ -921,10 +921,10 @@ export function CancelRescheduleView({
                           setActiveAction('reschedule');
                           setActionMessage(null);
                         }}
-                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[12.5px] font-extrabold transition-colors ${
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[12.5px] font-extrabold border ${
                           isSelected && activeAction === 'reschedule'
-                            ? 'bg-[#0070FF] text-white'
-                            : 'bg-[#E8F1FD] text-[#0070FF] hover:bg-[#DCEBFC]'
+                            ? 'bg-[#0070FF] border-[#0070FF] text-white neu-press-solid-blue'
+                            : 'bg-white border-[#BDDCFF] text-[#0070FF] hover:bg-[#EEF6FF] neu-press-surface'
                         }`}
                       >
                         <RefreshCw className="w-3.5 h-3.5" />
@@ -938,10 +938,10 @@ export function CancelRescheduleView({
                           setActiveAction('cancel');
                           setActionMessage(null);
                         }}
-                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[12.5px] font-extrabold transition-colors ${
+                        className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[12.5px] font-extrabold ${
                           isSelected && activeAction === 'cancel'
-                            ? 'bg-[#C62828] text-white'
-                            : 'bg-[#FEECEC] text-[#B91C1C] hover:bg-[#FCDADA]'
+                            ? 'bg-[#C62828] text-white neu-press-solid-red'
+                            : 'bg-[#FEECEC] text-[#B91C1C] hover:bg-[#FCDADA] neu-press-surface'
                         }`}
                       >
                         <CalendarX2 className="w-3.5 h-3.5" />
@@ -1042,7 +1042,7 @@ export function CancelRescheduleView({
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
                     placeholder="e.g. Schedule conflict or feeling better"
-                    className="w-full h-10 rounded-[12px] bg-white border border-[#C6DAF3] px-3 text-[13px] font-semibold text-[#0E1B3B]"
+                    className="w-full h-10 rounded-[12px] bg-white border border-[#D4E2F4] px-3 text-[13px] font-semibold text-[#0E1B3B] focus:outline-none focus:border-[#0070FF]"
                   />
                 </div>
 
@@ -1050,7 +1050,7 @@ export function CancelRescheduleView({
                   <button
                     type="button"
                     onClick={() => setActiveAction(null)}
-                    className="px-4 py-2.5 rounded-[13px] bg-white border border-[#C6DAF3] text-[13px] font-bold text-[#0E1B3B]"
+                    className="px-4 py-2.5 rounded-[13px] bg-white border border-[#C8DAF0] text-[13px] font-bold text-[#0E1B3B] neu-press-surface"
                   >
                     Keep Appointment
                   </button>
@@ -1058,7 +1058,7 @@ export function CancelRescheduleView({
                     type="button"
                     disabled={submitting}
                     onClick={handleConfirmCancel}
-                    className="flex-1 rounded-[13px] bg-[#C62828] hover:bg-[#B71C1C] py-2.5 px-4 text-[13.5px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-60"
+                    className="flex-1 rounded-[13px] bg-[#C62828] hover:bg-[#B71C1C] py-2.5 px-4 text-[13.5px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-60 neu-press-solid-red"
                   >
                     {submitting ? (
                       <>

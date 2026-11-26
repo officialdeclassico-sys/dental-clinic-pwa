@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" fill="none">
+  <defs>
+    <linearGradient id="whiteBg" x1="0" y1="0" x2="240" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F6C8A8"/>
+      <stop offset="50%" stop-color="#FAD4BC"/>
+      <stop offset="100%" stop-color="#CBEAFF"/>
+    </linearGradient>
+    <clipPath id="leftHalf">
+      <rect x="0" y="0" width="120" height="180"/>
+    </clipPath>
+    <clipPath id="rightHalf">
+      <rect x="120" y="0" width="120" height="180"/>
+    </clipPath>
+  </defs>
+
+  <rect width="240" height="180" fill="url(#whiteBg)"/>
+
+  <!-- Lips & Inner Smile -->
+  <path d="M16 90c24-42 62-54 104-54s80 12 104 54c-24 44-62 56-104 56S40 134 16 90Z" fill="#ED7E88"/>
+  <path d="M30 90c18-28 50-38 90-38s72 10 90 38c-18 28-50 38-90 38s-72-10-90-38Z" fill="#7D293A"/>
+
+  <!-- Before Teeth (Warm Stained Shade - Left Half) -->
+  <g clip-path="url(#leftHalf)" fill="#EFE1B6" stroke="#D9C694" stroke-width="1.2">
+    <rect x="44" y="54" width="24" height="35" rx="7"/>
+    <rect x="69" y="52" width="24" height="37" rx="7"/>
+    <rect x="94" y="50" width="25" height="39" rx="8"/>
+    <rect x="50" y="92" width="22" height="31" rx="6"/>
+    <rect x="73" y="93" width="23" height="31" rx="6"/>
+    <rect x="97" y="94" width="22" height="32" rx="6"/>
+  </g>
+
+  <!-- After Teeth (Bright Pearly White - Right Half) -->
+  <g clip-path="url(#rightHalf)" fill="#FFFFFF" stroke="#E4EFFA" stroke-width="1.2">
+    <rect x="121" y="50" width="25" height="39" rx="8"/>
+    <rect x="147" y="52" width="24" height="37" rx="7"/>
+    <rect x="172" y="54" width="24" height="35" rx="7"/>
+    <rect x="121" y="94" width="22" height="32" rx="6"/>
+    <rect x="144" y="93" width="23" height="31" rx="6"/>
+    <rect x="168" y="92" width="22" height="30" rx="6"/>
+  </g>
+
+  <!-- Crisp Split Comparison Line -->
+  <line x1="120" y1="22" x2="120" y2="158" stroke="#FFFFFF" stroke-width="2.5"/>
+  <!-- Whitening Sparkle -->
+  <path d="M184 36l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#FFFFFF"/>
+</svg>

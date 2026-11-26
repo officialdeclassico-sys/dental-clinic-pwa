@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" fill="none">
+  <defs>
+    <linearGradient id="bracesBg" x1="0" y1="0" x2="240" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFE1E6"/>
+      <stop offset="100%" stop-color="#D7C4FF"/>
+    </linearGradient>
+    <linearGradient id="lipGrad" x1="120" y1="16" x2="120" y2="164" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FA8B92"/>
+      <stop offset="100%" stop-color="#E76676"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="240" height="180" fill="url(#bracesBg)"/>
+  <!-- Smile Lips Frame -->
+  <path d="M16 90c24-44 62-56 104-56s80 12 104 56c-24 46-62 58-104 58S40 136 16 90Z" fill="url(#lipGrad)"/>
+  <path d="M28 90c20-30 52-40 92-40s72 10 92 40c-20 30-52 40-92 40s-72-10-92-40Z" fill="#7D293A"/>
+
+  <!-- Upper & Lower Teeth Arch -->
+  <g fill="#FFFFFF" stroke="#E4ECF7" stroke-width="1.2">
+    <rect x="44" y="54" width="24" height="34" rx="7"/>
+    <rect x="69" y="52" width="24" height="36" rx="7"/>
+    <rect x="94" y="50" width="25" height="38" rx="8"/>
+    <rect x="121" y="50" width="25" height="38" rx="8"/>
+    <rect x="147" y="52" width="24" height="36" rx="7"/>
+    <rect x="172" y="54" width="24" height="34" rx="7"/>
+
+    <rect x="50" y="92" width="22" height="30" rx="6"/>
+    <rect x="73" y="93" width="23" height="31" rx="6"/>
+    <rect x="97" y="94" width="22" height="32" rx="6"/>
+    <rect x="121" y="94" width="22" height="32" rx="6"/>
+    <rect x="144" y="93" width="23" height="31" rx="6"/>
+    <rect x="168" y="92" width="22" height="30" rx="6"/>
+  </g>
+
+  <!-- Orthodontic Archwires -->
+  <path d="M40 70q80 8 160 0" stroke="#7A8CA3" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M48 108q72 6 144 0" stroke="#7A8CA3" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Metal/Ceramic Brackets -->
+  <g fill="#B8C7D9" stroke="#5B6E87" stroke-width="1.2">
+    <rect x="52" y="65" width="9" height="9" rx="2"/>
+    <rect x="77" y="66" width="9" height="9" rx="2"/>
+    <rect x="102" y="67" width="9" height="9" rx="2"/>
+    <rect x="129" y="67" width="9" height="9" rx="2"/>
+    <rect x="154" y="66" width="9" height="9" rx="2"/>
+    <rect x="179" y="65" width="9" height="9" rx="2"/>
+
+    <rect x="57" y="103" width="8" height="8" rx="2"/>
+    <rect x="81" y="104" width="8" height="8" rx="2"/>
+    <rect x="104" y="105" width="8" height="8" rx="2"/>
+    <rect x="128" y="105" width="8" height="8" rx="2"/>
+    <rect x="151" y="104" width="8" height="8" rx="2"/>
+    <rect x="175" y="103" width="8" height="8" rx="2"/>
+  </g>
+</svg>

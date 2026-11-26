@@ -29,9 +29,11 @@ import {
   getSavedCustomerProfile,
 } from '../data/appointmentsRepository';
 import { BookingCalendarPicker } from './BookingCalendarPicker';
+import { ServiceCatalogItem } from '../data/servicesData';
 
 interface BookingFlowViewProps {
   initialTreatmentId?: BookingTreatmentId;
+  preselectedService?: ServiceCatalogItem | null;
   applyOffer?: boolean;
   onBack: () => void;
   onDoneToAppointments?: () => void;
@@ -60,15 +62,16 @@ function getDefaultFutureDateIso(): string {
 
 export function BookingFlowView({
   initialTreatmentId,
+  preselectedService = null,
   applyOffer = false,
   onBack,
   onDoneToAppointments,
   onViewMyAppointments,
   onBookingCreated,
 }: BookingFlowViewProps) {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(preselectedService ? 4 : 1);
   const [treatmentId, setTreatmentId] = useState<BookingTreatmentId>(
-    initialTreatmentId ?? 'general'
+    preselectedService?.bookingTreatmentId ?? initialTreatmentId ?? 'general'
   );
   const [branchId, setBranchId] = useState<string>(CLINIC_BRANCHES[0].branchId);
   const [dentistId, setDentistId] = useState<string>('any-available');
@@ -106,17 +109,32 @@ export function BookingFlowView({
     if (profile.email) setEmail(profile.email);
   }, []);
 
-  // Sync treatment if prop changes on entry
+  // Sync treatment & initial step if preselected service changes on entry
   useEffect(() => {
-    if (initialTreatmentId) {
+    if (preselectedService) {
+      setTreatmentId(preselectedService.bookingTreatmentId);
+      setStep(4);
+    } else if (initialTreatmentId) {
       setTreatmentId(initialTreatmentId);
     }
-  }, [initialTreatmentId]);
+  }, [initialTreatmentId, preselectedService]);
 
-  const selectedService = useMemo(
-    () => BOOKING_SERVICES.find((s) => s.treatmentId === treatmentId) ?? BOOKING_SERVICES[0],
-    [treatmentId]
-  );
+  const selectedService = useMemo(() => {
+    const base =
+      BOOKING_SERVICES.find((s) => s.treatmentId === treatmentId) ?? BOOKING_SERVICES[0];
+    if (
+      preselectedService &&
+      preselectedService.bookingTreatmentId === treatmentId
+    ) {
+      return {
+        ...base,
+        name: preselectedService.serviceName,
+        durationMinutes: preselectedService.durationMinutes,
+        subtitle: preselectedService.category,
+      };
+    }
+    return base;
+  }, [treatmentId, preselectedService]);
 
   const selectedBranch = useMemo(
     () => CLINIC_BRANCHES.find((b) => b.branchId === branchId) ?? CLINIC_BRANCHES[0],
@@ -242,6 +260,10 @@ export function BookingFlowView({
       const created = await createAppointment({
         branchId,
         treatmentId,
+        treatmentNameOverride:
+          preselectedService && preselectedService.bookingTreatmentId === treatmentId
+            ? preselectedService.serviceName
+            : undefined,
         dentistId,
         appointmentDate,
         startTime: selectedSlot.startTime,
@@ -313,7 +335,7 @@ export function BookingFlowView({
               )}
             </div>
 
-            <div className="mt-5 rounded-[18px] bg-white border border-[#DCE8F8] p-4 text-left space-y-2.5">
+            <div className="mt-5 rounded-[18px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] p-4 text-left space-y-2.5">
               <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#EAF1FA]">
                 <span className="text-[12px] font-bold text-[#425478]">Treatment</span>
                 <span className="text-[13.5px] font-extrabold text-[#0E1B3B] text-right">
@@ -356,7 +378,7 @@ export function BookingFlowView({
               <button
                 type="button"
                 onClick={goAppointments}
-                className="sm:w-auto px-5 py-3 rounded-[15px] bg-white border border-[#C6DAF3] text-[13.5px] font-bold text-[#0E1B3B]"
+                className="sm:w-auto px-5 py-3 rounded-[15px] bg-white border border-[#D4E2F4] hover:bg-[#EFF6FF] text-[13.5px] font-bold text-[#0E1B3B] neu-press-surface"
               >
                 Back to Appointments
               </button>
@@ -409,7 +431,7 @@ export function BookingFlowView({
                   disabled={!clickable}
                   onClick={() => clickable && setStep(stepNum)}
                   title={label}
-                  className="flex flex-col items-center gap-1 disabled:cursor-default"
+                  className="flex flex-col items-center gap-1 rounded-[8px] py-0.5 neu-press-soft disabled:cursor-default"
                 >
                   <span
                     className={`w-full h-1.5 rounded-full transition-colors ${
@@ -432,6 +454,29 @@ export function BookingFlowView({
             })}
           </div>
         </div>
+
+        {preselectedService && preselectedService.bookingTreatmentId === treatmentId && (
+          <div
+            data-testid="preselected-service-banner"
+            className="rounded-[15px] bg-[#E9F3FF] border border-[#BDDCFF] px-3.5 py-2.5 flex items-center justify-between gap-2 text-[12.5px]"
+          >
+            <div className="min-w-0">
+              <span className="block text-[11px] font-bold text-[#0070FF] uppercase tracking-wide">
+                Selected Service
+              </span>
+              <span className="block font-extrabold text-[#0E1B3B] truncate">
+                {selectedService.name} • {selectedService.durationMinutes} mins
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="text-[12px] font-bold text-[#0070FF] hover:underline shrink-0 rounded-[8px] neu-press-soft px-1.5 py-0.5"
+            >
+              Change
+            </button>
+          </div>
+        )}
 
         {applyOffer && (
           <div className="rounded-[15px] bg-[#E3F0FF] border border-[#BDDCFF] px-3.5 py-2.5 flex items-center gap-2 text-[12.5px] font-bold text-[#005CE6]">
@@ -464,10 +509,10 @@ export function BookingFlowView({
                     key={service.treatmentId}
                     type="button"
                     onClick={() => setTreatmentId(service.treatmentId)}
-                    className={`w-full text-left rounded-[15px] p-3.5 border transition-all flex items-center justify-between gap-3 ${
+                    className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-center justify-between gap-3 ${
                       selected
-                        ? 'bg-[#E9F3FF] border-[#0070FF] shadow-[0_3px_10px_rgba(0,112,255,0.16)]'
-                        : 'bg-white border-[#DCE8F8] hover:border-[#8ABDFB]'
+                        ? 'bg-[#E8F2FE] border-2 border-[#0070FF]'
+                        : 'bg-white/85 border-white hover:bg-[#F3F8FE] shadow-[0_2px_8px_rgba(140,174,216,0.18)]'
                     }`}
                   >
                     <div className="min-w-0">
@@ -513,10 +558,10 @@ export function BookingFlowView({
                     key={branch.branchId}
                     type="button"
                     onClick={() => setBranchId(branch.branchId)}
-                    className={`w-full text-left rounded-[15px] p-3.5 border transition-all flex items-start justify-between gap-3 ${
+                    className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-start justify-between gap-3 ${
                       selected
-                        ? 'bg-[#E9F3FF] border-[#0070FF]'
-                        : 'bg-white border-[#DCE8F8]'
+                        ? 'bg-[#E8F2FE] border-2 border-[#0070FF]'
+                        : 'bg-white/85 border-white hover:bg-[#F3F8FE] shadow-[0_2px_8px_rgba(140,174,216,0.18)]'
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -566,10 +611,10 @@ export function BookingFlowView({
                     key={dentist.dentistId}
                     type="button"
                     onClick={() => setDentistId(dentist.dentistId)}
-                    className={`w-full text-left rounded-[15px] p-3.5 border transition-all flex items-center justify-between gap-3 ${
+                    className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-center justify-between gap-3 ${
                       selected
-                        ? 'bg-[#E9F3FF] border-[#0070FF]'
-                        : 'bg-white border-[#DCE8F8] hover:border-[#8ABDFB]'
+                        ? 'bg-[#E8F2FE] border-2 border-[#0070FF]'
+                        : 'bg-white/85 border-white hover:bg-[#F3F8FE] shadow-[0_2px_8px_rgba(140,174,216,0.18)]'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">
@@ -657,7 +702,7 @@ export function BookingFlowView({
                   if (fieldErrors.fullName) setFieldErrors((p) => ({ ...p, fullName: undefined }));
                 }}
                 placeholder="Enter patient full name"
-                className="w-full h-11 rounded-[12px] bg-white border border-[#C6DAF3] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
+                className="w-full h-11 rounded-[12px] bg-white border border-[#D4E2F4] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
               />
               {fieldErrors.fullName && (
                 <p className="mt-1 text-[11.5px] font-bold text-[#C62828]">{fieldErrors.fullName}</p>
@@ -681,7 +726,7 @@ export function BookingFlowView({
                     setFieldErrors((p) => ({ ...p, mobileNumber: undefined }));
                 }}
                 placeholder="e.g. +91 98490 12345"
-                className="w-full h-11 rounded-[12px] bg-white border border-[#C6DAF3] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
+                className="w-full h-11 rounded-[12px] bg-white border border-[#D4E2F4] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
               />
               {fieldErrors.mobileNumber && (
                 <p className="mt-1 text-[11.5px] font-bold text-[#C62828]">
@@ -706,7 +751,7 @@ export function BookingFlowView({
                   if (fieldErrors.email) setFieldErrors((p) => ({ ...p, email: undefined }));
                 }}
                 placeholder="patient@example.com"
-                className="w-full h-11 rounded-[12px] bg-white border border-[#C6DAF3] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
+                className="w-full h-11 rounded-[12px] bg-white border border-[#D4E2F4] px-3.5 text-[13.5px] font-semibold text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
               />
               {fieldErrors.email && (
                 <p className="mt-1 text-[11.5px] font-bold text-[#C62828]">{fieldErrors.email}</p>
@@ -726,7 +771,7 @@ export function BookingFlowView({
                 value={reasonForVisit}
                 onChange={(e) => setReasonForVisit(e.target.value)}
                 placeholder="Describe any symptoms, preferences, or questions for the dentist..."
-                className="w-full rounded-[12px] bg-white border border-[#C6DAF3] p-3 text-[13px] font-medium text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
+                className="w-full rounded-[12px] bg-white border border-[#D4E2F4] p-3 text-[13px] font-medium text-[#0E1B3B] focus:outline-2 focus:outline-[#0070FF]"
               />
             </div>
           </section>
@@ -742,20 +787,20 @@ export function BookingFlowView({
               <button
                 type="button"
                 onClick={() => setStep(6)}
-                className="inline-flex items-center gap-1 text-[12.5px] font-bold text-[#0070FF] hover:underline"
+                className="inline-flex items-center gap-1 text-[12.5px] font-bold text-[#0070FF] hover:underline rounded-[8px] neu-press-soft px-1.5 py-0.5"
               >
                 <Edit3 className="w-3.5 h-3.5" />
                 Edit Details
               </button>
             </div>
 
-            <div className="rounded-[16px] bg-white border border-[#DCE8F8] divide-y divide-[#EAF1FA]">
+            <div className="rounded-[16px] bg-white/85 border border-white shadow-[0_3px_10px_rgba(140,174,216,0.18)] divide-y divide-[#EAF1FA]">
               <div className="p-3 flex items-center justify-between gap-2">
                 <span className="text-[12px] font-bold text-[#425478]">Treatment</span>
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="text-[13px] font-extrabold text-[#0E1B3B] hover:text-[#0070FF] text-right"
+                  className="text-[13px] font-extrabold text-[#0E1B3B] hover:text-[#0070FF] text-right rounded-[8px] neu-press-soft px-1.5 py-0.5"
                 >
                   {selectedService.name} ({selectedService.durationMinutes} min)
                 </button>
@@ -771,7 +816,7 @@ export function BookingFlowView({
                 <button
                   type="button"
                   onClick={() => setStep(3)}
-                  className="text-[13px] font-extrabold text-[#0E1B3B] hover:text-[#0070FF] text-right"
+                  className="text-[13px] font-extrabold text-[#0E1B3B] hover:text-[#0070FF] text-right rounded-[8px] neu-press-soft px-1.5 py-0.5"
                 >
                   {selectedDentist.name}
                 </button>
@@ -781,7 +826,7 @@ export function BookingFlowView({
                 <button
                   type="button"
                   onClick={() => setStep(4)}
-                  className="text-[13px] font-extrabold text-[#0070FF] text-right tabular-nums"
+                  className="text-[13px] font-extrabold text-[#0070FF] text-right tabular-nums rounded-[8px] neu-press-soft px-1.5 py-0.5"
                 >
                   {formattedDateParts.fullFormatted} • {selectedSlot?.startTime ?? '—'}
                 </button>

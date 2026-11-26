@@ -127,7 +127,7 @@ export function ClinicHeader({
                   <button
                     type="button"
                     onClick={onMarkAllRead}
-                    className="text-[11.5px] font-bold text-[#0070FF] hover:underline"
+                    className="text-[11.5px] font-bold text-[#0070FF] hover:underline rounded-[8px] neu-press-soft px-1.5 py-0.5"
                   >
                     {markAllReadLabel}
                   </button>
@@ -145,10 +145,10 @@ export function ClinicHeader({
                       key={item.id}
                       type="button"
                       onClick={() => onMarkNotificationRead(item.id)}
-                      className={`w-full text-left rounded-[14px] p-2.5 transition-colors ${
+                      className={`w-full text-left rounded-[14px] p-2.5 border neu-press-surface ${
                         item.unread
-                          ? 'bg-[#E3EFFD] border border-[#C3DCF9]'
-                          : 'bg-white/75 border border-white'
+                          ? 'bg-[#E8F2FE] border-[#BDDCFF]'
+                          : 'bg-white/80 border-[#DCE8F8] hover:bg-[#F3F8FE]'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2">
@@ -215,10 +215,10 @@ export function ClinicHeader({
                       onLanguageChange(lang.code);
                       setLangOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-[12px] text-[12.5px] font-bold transition-colors ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-[12px] text-[12.5px] font-bold ${
                       selected
-                        ? 'bg-[#0070FF] text-white'
-                        : 'text-[#0E1B3B] hover:bg-[#E1EEFC]'
+                        ? 'bg-[#0070FF] text-white neu-press-solid-blue'
+                        : 'text-[#0E1B3B] hover:bg-[#E1EEFC] neu-press-surface'
                     }`}
                   >
                     <span>
