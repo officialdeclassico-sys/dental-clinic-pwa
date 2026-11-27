@@ -30,6 +30,7 @@ import {
 } from '../data/appointmentsRepository';
 import { BookingCalendarPicker } from './BookingCalendarPicker';
 import { ServiceCatalogItem } from '../data/servicesData';
+import { triggerErrorHaptic, triggerLightHaptic, triggerSuccessHaptic } from '../utils/haptics';
 
 interface BookingFlowViewProps {
   initialTreatmentId?: BookingTreatmentId;
@@ -220,13 +221,16 @@ export function BookingFlowView({
   const handleNext = () => {
     setSubmitError(null);
     if (step === 5 && !selectedSlot) {
+      triggerErrorHaptic();
       setSubmitError('Please select an available time slot to continue.');
       return;
     }
     if (step === 6 && !validateDetails()) {
+      triggerErrorHaptic();
       return;
     }
     if (step < 7) {
+      triggerLightHaptic();
       setStep((s) => s + 1);
     }
   };
@@ -243,11 +247,13 @@ export function BookingFlowView({
   const handleConfirmBooking = async () => {
     if (submitLockRef.current || isSubmitting) return;
     if (!selectedSlot) {
+      triggerErrorHaptic();
       setSubmitError('Please choose an available time slot first.');
       setStep(5);
       return;
     }
     if (!validateDetails()) {
+      triggerErrorHaptic();
       setStep(6);
       return;
     }
@@ -273,9 +279,11 @@ export function BookingFlowView({
         patientEmail: email,
         reasonForVisit,
       });
+      triggerSuccessHaptic();
       setConfirmedRecord(created);
       onBookingCreated(created);
     } catch (err) {
+      triggerErrorHaptic();
       setSubmitError(
         err instanceof Error
           ? err.message
@@ -428,6 +436,7 @@ export function BookingFlowView({
                 <button
                   key={label}
                   type="button"
+                  data-haptic="selection"
                   disabled={!clickable}
                   onClick={() => clickable && setStep(stepNum)}
                   title={label}
@@ -508,6 +517,7 @@ export function BookingFlowView({
                   <button
                     key={service.treatmentId}
                     type="button"
+                    data-haptic="selection"
                     onClick={() => setTreatmentId(service.treatmentId)}
                     className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-center justify-between gap-3 ${
                       selected
@@ -557,6 +567,7 @@ export function BookingFlowView({
                   <button
                     key={branch.branchId}
                     type="button"
+                    data-haptic="selection"
                     onClick={() => setBranchId(branch.branchId)}
                     className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-start justify-between gap-3 ${
                       selected
@@ -610,6 +621,7 @@ export function BookingFlowView({
                   <button
                     key={dentist.dentistId}
                     type="button"
+                    data-haptic="selection"
                     onClick={() => setDentistId(dentist.dentistId)}
                     className={`w-full text-left rounded-[15px] p-3.5 border neu-press-surface flex items-center justify-between gap-3 ${
                       selected
@@ -864,6 +876,7 @@ export function BookingFlowView({
           {step < 7 ? (
             <button
               type="button"
+              data-haptic="deferred"
               onClick={handleNext}
               className="flex-1 neu-blue-btn rounded-[15px] py-3 px-5 text-[14.5px] font-extrabold text-white flex items-center justify-center gap-2"
             >
@@ -873,6 +886,7 @@ export function BookingFlowView({
           ) : (
             <button
               type="button"
+              data-haptic="deferred"
               disabled={isSubmitting}
               onClick={handleConfirmBooking}
               className="flex-1 neu-blue-btn rounded-[15px] py-3 px-5 text-[14.5px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-70"

@@ -136,6 +136,7 @@ export function BookingCalendarPicker({
                 <button
                   key={iso}
                   type="button"
+                  data-haptic="selection"
                   disabled={disabled}
                   onClick={() => onSelectDate(iso)}
                   aria-label={iso}
@@ -227,6 +228,7 @@ export function BookingCalendarPicker({
                   <button
                     key={slot.startTime}
                     type="button"
+                    data-haptic="selection"
                     disabled={!slot.available}
                     onClick={() => onSelectSlot?.(slot)}
                     className={`rounded-[13px] px-3 py-2.5 text-left ${

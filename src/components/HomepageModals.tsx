@@ -8,6 +8,7 @@ import {
   TreatmentItem,
   UI_STRINGS,
 } from '../data/clinicData';
+import { triggerErrorHaptic, triggerSuccessHaptic } from '../utils/haptics';
 
 export type ActiveModalState =
   | { type: 'none' }
@@ -108,18 +109,27 @@ export function HomepageModals({
   const handleTokenSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const cleaned = tokenInput.trim().toUpperCase();
-    if (!cleaned) return;
+    if (!cleaned) {
+      triggerErrorHaptic();
+      return;
+    }
     const normalized = /^[A-Z]?\d{1,3}$/.test(cleaned)
       ? cleaned.match(/^[A-Z]/)
         ? `${cleaned[0]}${cleaned.slice(1).padStart(3, '0')}`
         : `A${cleaned.padStart(3, '0')}`
       : cleaned.slice(0, 6);
+    triggerSuccessHaptic();
     onUpdateToken(normalized);
   };
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!patientName.trim() || !phone.trim()) {
+      triggerErrorHaptic();
+      return;
+    }
     const refCode = `SC-${Math.floor(1000 + Math.random() * 9000)}`;
+    triggerSuccessHaptic();
     setBookingConfirmed(refCode);
   };
 
@@ -204,6 +214,7 @@ export function HomepageModals({
                 />
                 <button
                   type="submit"
+                  data-haptic="deferred"
                   className="neu-blue-btn rounded-[12px] px-4 h-10 text-[12.5px] font-bold text-white whitespace-nowrap"
                 >
                   {t.updateTokenBtn}
@@ -214,11 +225,12 @@ export function HomepageModals({
                   <button
                     key={preset}
                     type="button"
+                    data-haptic="selection"
                     onClick={() => {
                       setTokenInput(preset);
                       onUpdateToken(preset);
                     }}
-                    className={`px-2.5 py-1 rounded-full text-[11.5px] font-bold border ${
+                    className={`px-2.5 py-1 neu-btn-sm text-[11.5px] font-bold border ${
                       userToken === preset
                         ? 'bg-[#0070FF] border-[#0070FF] text-white neu-press-solid-blue'
                         : 'bg-white border-[#D4E2F4] text-[#1A2B50] hover:bg-[#EFF6FF] neu-press-surface'
@@ -230,7 +242,7 @@ export function HomepageModals({
                 <button
                   type="button"
                   onClick={onAdvanceQueue}
-                  className="ml-auto px-3 py-1 rounded-full text-[11.5px] font-bold bg-white border border-[#BDDCFF] hover:bg-[#EFF6FF] text-[#0066F5] neu-press-surface"
+                  className="ml-auto px-3 py-1 neu-btn-sm text-[11.5px] font-bold bg-white border border-[#BDDCFF] hover:bg-[#EFF6FF] text-[#0066F5] neu-press-surface"
                 >
                   {t.simulateNextBtn}
                 </button>
@@ -278,7 +290,7 @@ export function HomepageModals({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="mt-4 w-full neu-blue-btn rounded-full py-2.5 text-[13.5px] font-bold text-white"
+                  className="mt-4 w-full neu-blue-btn neu-btn-md py-2.5 text-[13.5px] font-bold text-white"
                 >
                   {t.close}
                 </button>
@@ -311,8 +323,9 @@ export function HomepageModals({
                       <button
                         key={slot}
                         type="button"
+                        data-haptic="selection"
                         onClick={() => setSelectedSlot(slot)}
-                        className={`px-3 py-1.5 rounded-full text-[11.5px] font-bold border ${
+                        className={`px-3 py-1.5 neu-btn-sm text-[11.5px] font-bold border ${
                           selectedSlot === slot
                             ? 'bg-[#0070FF] border-[#0070FF] text-white neu-press-solid-blue'
                             : 'bg-white border-[#D4E2F4] text-[#1A2B50] hover:bg-[#EFF6FF] neu-press-surface'
@@ -355,7 +368,8 @@ export function HomepageModals({
 
                 <button
                   type="submit"
-                  className="w-full neu-blue-btn rounded-full py-2.5 text-[13.5px] font-bold text-white mt-2"
+                  data-haptic="deferred"
+                  className="w-full neu-blue-btn neu-btn-md py-2.5 text-[13.5px] font-bold text-white mt-2"
                 >
                   {t.confirmBooking}
                 </button>
@@ -410,7 +424,7 @@ export function HomepageModals({
               <button
                 type="button"
                 onClick={() => onOpenBooking(item.id)}
-                className="mt-4 w-full neu-blue-btn rounded-full py-2.5 text-[13.5px] font-bold text-white"
+                className="mt-4 w-full neu-blue-btn neu-btn-md py-2.5 text-[13.5px] font-bold text-white"
               >
                 {t.bookThisTreatment}
               </button>
@@ -529,7 +543,7 @@ export function HomepageModals({
             <button
               type="button"
               onClick={onClose}
-              className="mt-4 w-full neu-blue-btn rounded-full py-2.5 text-[13.5px] font-bold text-white"
+              className="mt-4 w-full neu-blue-btn neu-btn-md py-2.5 text-[13.5px] font-bold text-white"
             >
               {t.close}
             </button>
@@ -569,14 +583,14 @@ export function HomepageModals({
               <button
                 type="button"
                 onClick={() => onOpenBooking()}
-                className="flex-1 neu-blue-btn rounded-full py-2.5 text-[13px] font-bold text-white"
+                className="flex-1 neu-blue-btn neu-btn-md py-2.5 text-[13px] font-bold text-white"
               >
                 {t.bookNow}
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-2.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#EFF6FF] text-[13px] font-bold text-[#0E1B3B] neu-press-surface"
+                className="px-5 py-2.5 neu-btn-md bg-white border border-[#D4E2F4] hover:bg-[#EFF6FF] text-[13px] font-bold text-[#0E1B3B] neu-press-surface"
               >
                 {t.close}
               </button>

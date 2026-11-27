@@ -292,7 +292,7 @@ export function ServiceDetailsModal({
             <button
               type="button"
               onClick={handleBookClick}
-              className="w-full neu-blue-btn rounded-full py-3 sm:py-3.5 px-6 text-[15px] sm:text-[16.5px] font-extrabold text-white flex items-center justify-center gap-2.5 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+              className="w-full neu-blue-btn neu-btn-lg py-3 sm:py-3.5 px-6 text-[15px] sm:text-[16.5px] font-extrabold text-white flex items-center justify-center gap-2.5 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
             >
               <Calendar className="w-4.5 h-4.5 sm:w-5 sm:h-5" strokeWidth={2.2} />
               <span>Book Appointment</span>

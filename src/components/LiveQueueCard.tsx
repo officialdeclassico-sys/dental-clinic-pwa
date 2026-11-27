@@ -72,7 +72,7 @@ export function LiveQueueCard({
         <button
           type="button"
           onClick={onTokenClick}
-          className="mt-1 neu-blue-btn rounded-full px-3.5 sm:px-4 md:px-6 py-[5px] md:py-[7px] text-[13px] sm:text-[14px] md:text-[15px] font-extrabold text-white leading-none tracking-wide tabular-nums whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+          className="mt-1 neu-blue-btn neu-btn-sm px-3.5 sm:px-4 md:px-6 py-[5px] md:py-[7px] text-[13px] sm:text-[14px] md:text-[15px] font-extrabold text-white leading-none tracking-wide tabular-nums whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
         >
           {userToken}
         </button>

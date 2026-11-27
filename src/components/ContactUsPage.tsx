@@ -440,7 +440,7 @@ export function ContactUsPage({
               href={config.googleMapsSearchUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="neu-blue-btn rounded-full px-3.5 sm:px-4.5 py-1.5 text-[11.5px] sm:text-[12.5px] font-bold text-white whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+              className="neu-blue-btn neu-btn-sm px-3.5 sm:px-4.5 py-1.5 text-[11.5px] sm:text-[12.5px] font-bold text-white whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
             >
               View on Map
             </a>

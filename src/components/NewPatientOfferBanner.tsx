@@ -92,7 +92,7 @@ export function NewPatientOfferBanner({
         <button
           type="button"
           onClick={onBookNow}
-          className="mt-3 sm:mt-3.5 md:mt-4.5 neu-blue-btn rounded-full px-6.5 sm:px-7 md:px-9 py-2 md:py-2.5 text-[13.5px] sm:text-[14px] md:text-[15.5px] font-bold text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+          className="mt-3 sm:mt-3.5 md:mt-4.5 neu-blue-btn neu-btn-md px-6.5 sm:px-7 md:px-9 py-2 md:py-2.5 text-[13.5px] sm:text-[14px] md:text-[15.5px] font-bold text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
         >
           {bookNowLabel}
         </button>

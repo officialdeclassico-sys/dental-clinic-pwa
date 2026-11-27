@@ -237,7 +237,7 @@ export function AppointmentsPage({
         <button
           type="button"
           onClick={() => onBookNew()}
-          className="w-full neu-blue-btn rounded-[18px] md:rounded-[20px] px-5 sm:px-7 py-3.5 md:py-4 flex items-center justify-between gap-3 text-white focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+          className="w-full neu-blue-btn neu-btn-lg px-5 sm:px-7 py-3.5 md:py-4 flex items-center justify-between gap-3 text-white focus-visible:outline-2 focus-visible:outline-[#0070FF]"
         >
           <span className="flex items-center gap-3.5 sm:gap-4">
             <CalendarPlus className="w-7 h-7 sm:w-8 sm:h-8 shrink-0" strokeWidth={2.1} />
@@ -370,7 +370,7 @@ export function AppointmentsPage({
               <div className="flex flex-col items-end gap-2 shrink-0">
                 <div className="flex flex-col items-end gap-1">
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] sm:text-[12px] font-extrabold ${
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 neu-btn-sm text-[11px] sm:text-[12px] font-extrabold ${
                       nearestUpcoming.status === 'Confirmed'
                         ? 'bg-[#D7F5E5] text-[#117A45]'
                         : 'bg-[#FEF3C7] text-[#9A5B00]'
@@ -393,7 +393,7 @@ export function AppointmentsPage({
                 <button
                   type="button"
                   onClick={() => onOpenCancelReschedule(nearestUpcoming.appointmentId)}
-                  className="px-3 sm:px-3.5 py-1.5 rounded-full bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[11.5px] sm:text-[12.5px] font-bold shadow-[0_2px_6px_rgba(0,112,255,0.12)] neu-press-surface"
+                  className="px-3 sm:px-3.5 py-1.5 neu-btn-sm bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[11.5px] sm:text-[12.5px] font-bold shadow-[0_2px_6px_rgba(0,112,255,0.12)] neu-press-surface"
                 >
                   Reschedule
                 </button>
@@ -407,7 +407,7 @@ export function AppointmentsPage({
               <button
                 type="button"
                 onClick={() => onBookNew()}
-                className="neu-blue-btn rounded-full px-4 py-2 text-[12.5px] font-extrabold text-white"
+                className="neu-blue-btn neu-btn-md px-4 py-2 text-[12.5px] font-extrabold text-white"
               >
                 Book New Appointment
               </button>

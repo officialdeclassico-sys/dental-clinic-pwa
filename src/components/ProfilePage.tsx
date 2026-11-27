@@ -17,6 +17,7 @@ import {
 import { CustomerProfile } from '../data/appointmentsRepository';
 import { ProfileToothHeroIllustration } from './DentalIllustrations';
 import { validateProfileFields } from './ProfileSubViews';
+import { triggerErrorHaptic, triggerSuccessHaptic } from '../utils/haptics';
 
 export interface ProfileDraftState {
   fullName: string;
@@ -119,8 +120,12 @@ export function ProfilePage({
     }
 
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length > 0) {
+      triggerErrorHaptic();
+      return;
+    }
 
+    triggerSuccessHaptic();
     onCreateProfile({
       fullName: draft.fullName.trim(),
       mobileNumber: draft.mobileNumber.trim(),
@@ -321,6 +326,7 @@ export function ProfilePage({
             <div className="pt-1">
               <button
                 type="submit"
+                data-haptic="deferred"
                 className="w-full h-[52px] rounded-[16px] neu-blue-btn text-[16px] font-bold text-white flex items-center justify-center"
               >
                 Create Profile
@@ -509,7 +515,9 @@ export function ProfilePage({
               </button>
               <button
                 type="button"
+                data-haptic="deferred"
                 onClick={() => {
+                  triggerSuccessHaptic();
                   setShowLogoutDialog(false);
                   onLogout();
                 }}

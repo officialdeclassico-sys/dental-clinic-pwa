@@ -3,7 +3,6 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronLeft,
-  ChevronRight,
   Loader2,
   Play,
   SquarePen,
@@ -21,6 +20,7 @@ import {
   loadVideoObjectUrlFromIdb,
   sortReviews,
 } from '../data/reviewsRepository';
+import { PaginationControls } from './PaginationControls';
 
 interface ReviewsPageProps {
   reviews: ReviewRecord[];
@@ -253,7 +253,7 @@ export function ReviewsPage({
         <button
           type="button"
           onClick={onAddReview}
-          className="neu-blue-btn rounded-full px-3.5 sm:px-4.5 py-2 text-[12.5px] sm:text-[13.5px] font-bold text-white inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+          className="neu-blue-btn neu-btn-md px-3.5 sm:px-4.5 py-2 text-[12.5px] sm:text-[13.5px] font-bold text-white inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
         >
           <SquarePen className="w-4 h-4" strokeWidth={2.2} />
           <span>Add Review</span>
@@ -362,7 +362,7 @@ export function ReviewsPage({
           <button
             type="button"
             onClick={() => setCurrentPage(1)}
-            className="neu-blue-btn rounded-full px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-white whitespace-nowrap tabular-nums"
+            className="neu-blue-btn neu-btn-md px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-white whitespace-nowrap tabular-nums"
           >
             All Reviews ({stats.totalReviews.toLocaleString('en-US')})
           </button>
@@ -373,7 +373,7 @@ export function ReviewsPage({
               onClick={() => setSortMenuOpen((o) => !o)}
               aria-haspopup="listbox"
               aria-expanded={sortMenuOpen}
-              className="neu-card-interactive rounded-full px-3.5 sm:px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-[#0E1B3B] inline-flex items-center gap-1.5 whitespace-nowrap"
+              className="neu-card-interactive neu-btn-md px-3.5 sm:px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-[#0E1B3B] inline-flex items-center gap-1.5 whitespace-nowrap"
             >
               <span>{SORT_LABELS[sortBy]}</span>
               <ChevronDown className="w-4 h-4 text-[#0E1B3B]" strokeWidth={2.5} />
@@ -422,7 +422,7 @@ export function ReviewsPage({
               <button
                 type="button"
                 onClick={onAddReview}
-                className="neu-blue-btn rounded-full px-5 py-2.5 text-[13px] font-extrabold text-white"
+                className="neu-blue-btn neu-btn-md px-5 py-2.5 text-[13px] font-extrabold text-white"
               >
                 Write First Review
               </button>
@@ -518,7 +518,7 @@ export function ReviewsPage({
                           rating: review.rating,
                         })
                       }
-                      className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-[#EEF5FF] border border-white hover:bg-[#E1EEFF] shadow-[0_2px_6px_rgba(140,174,216,0.2)] px-3.5 py-1.5 text-[11.5px] font-bold text-[#0070FF] neu-press-surface"
+                      className="mt-2.5 inline-flex items-center gap-1.5 neu-btn-sm bg-[#EEF5FF] border border-white hover:bg-[#E1EEFF] shadow-[0_2px_6px_rgba(140,174,216,0.2)] px-3.5 py-1.5 text-[11.5px] font-bold text-[#0070FF] neu-press-surface"
                     >
                       <Play className="w-3.5 h-3.5 fill-[#0070FF]" />
                       <span>Play Attached Video</span>
@@ -532,60 +532,16 @@ export function ReviewsPage({
 
         {/* Compact Pagination */}
         {totalPages > 0 && !loading && sortedReviews.length > 0 && (
-          <nav
-            aria-label="Reviews Pagination"
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            navAriaLabel="Reviews Pagination"
             className="pt-0.5 pb-1 flex items-center justify-center gap-3"
-          >
-            <button
-              type="button"
-              disabled={currentPage <= 1}
-              onClick={() => {
-                setCurrentPage((p) => Math.max(1, p - 1));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              aria-label="Previous page"
-              className="w-9 h-9 rounded-[11px] neu-card-interactive flex items-center justify-center text-[#0E1B3B] disabled:opacity-40 disabled:pointer-events-none"
-            >
-              <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
-            </button>
-
-            <div className="flex items-center gap-1.5">
-              {Array.from({ length: totalPages }).map((_, idx) => {
-                const pageNum = idx + 1;
-                const active = pageNum === currentPage;
-                return (
-                  <button
-                    key={pageNum}
-                    type="button"
-                    onClick={() => {
-                      setCurrentPage(pageNum);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    aria-label={`Page ${pageNum}`}
-                    aria-current={active ? 'page' : undefined}
-                    className={`rounded-full neu-press-dot ${
-                      active
-                        ? 'w-2.5 h-2.5 bg-[#0070FF]'
-                        : 'w-2 h-2 bg-[#AFC8E8] hover:bg-[#7BA9E2]'
-                    }`}
-                  />
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              disabled={currentPage >= totalPages}
-              onClick={() => {
-                setCurrentPage((p) => Math.min(totalPages, p + 1));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              aria-label="Next page"
-              className="w-9 h-9 rounded-[11px] neu-card-interactive flex items-center justify-center text-[#0E1B3B] disabled:opacity-40 disabled:pointer-events-none"
-            >
-              <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
-            </button>
-          </nav>
+          />
         )}
       </div>
 

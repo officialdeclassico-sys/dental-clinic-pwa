@@ -268,7 +268,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(category)}
-                className={`rounded-full px-3.5 py-1.5 text-[12px] sm:text-[13px] font-bold whitespace-nowrap shrink-0 transition-all duration-150 focus-visible:outline-2 focus-visible:outline-[#0070FF] ${
+                className={`neu-btn-sm px-3.5 py-1.5 text-[12px] sm:text-[13px] font-bold whitespace-nowrap shrink-0 transition-all duration-150 focus-visible:outline-2 focus-visible:outline-[#0070FF] ${
                   isActive
                     ? 'neu-blue-btn text-white'
                     : 'neu-card-interactive text-[#1B2D52] hover:text-[#0070FF]'
@@ -293,7 +293,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
                   setSearchQuery('');
                   setActiveCategory('All');
                 }}
-                className="mt-2.5 neu-blue-btn rounded-full px-4 py-1.5 text-[12px] font-bold text-white"
+                className="mt-2.5 neu-blue-btn neu-btn-sm px-4 py-1.5 text-[12px] font-bold text-white"
               >
                 Reset Filters
               </button>
@@ -372,7 +372,7 @@ export function FaqsPage({ onBack, onContactUs }: FaqsPageProps) {
           <button
             type="button"
             onClick={onContactUs}
-            className="neu-blue-btn rounded-full px-4 sm:px-5 md:px-6 py-2 md:py-2.5 text-[12.5px] sm:text-[13.5px] md:text-[14.5px] font-bold text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+            className="neu-blue-btn neu-btn-md px-4 sm:px-5 md:px-6 py-2 md:py-2.5 text-[12.5px] sm:text-[13.5px] md:text-[14.5px] font-bold text-white whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
           >
             Contact Us
           </button>

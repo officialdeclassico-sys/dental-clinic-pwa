@@ -32,6 +32,10 @@ import {
   updateReminderPreference,
 } from '../data/appointmentsRepository';
 import { BookingCalendarPicker } from './BookingCalendarPicker';
+import {
+  triggerErrorHaptic,
+  triggerSuccessHaptic,
+} from '../utils/haptics';
 
 export function StatusBadge({ status }: { status: AppointmentStatus }) {
   const styles: Record<AppointmentStatus, string> = {
@@ -42,7 +46,7 @@ export function StatusBadge({ status }: { status: AppointmentStatus }) {
   };
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold ${styles[status]}`}
+      className={`inline-flex items-center gap-1 px-2.5 py-1 neu-btn-sm text-[11px] font-extrabold ${styles[status]}`}
     >
       {status === 'Confirmed' && <CheckCircle2 className="w-3 h-3" strokeWidth={2.5} />}
       {status}
@@ -199,7 +203,7 @@ export function MyAppointmentsView({
                       </h2>
                       <div className="flex items-center gap-1.5">
                         {apt.isSamplePreview && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-[8px] bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
                             Sample Preview
                           </span>
                         )}
@@ -228,7 +232,7 @@ export function MyAppointmentsView({
                       <button
                         type="button"
                         onClick={() => onOpenCancelReschedule(apt.appointmentId)}
-                        className="px-3.5 py-1.5 rounded-full bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[12px] font-bold neu-press-surface"
+                        className="px-3.5 py-1.5 neu-btn-sm bg-white border border-[#8BC0FB] hover:bg-[#EEF6FF] text-[#0070FF] text-[12px] font-bold neu-press-surface"
                       >
                         Reschedule / Cancel
                       </button>
@@ -237,7 +241,7 @@ export function MyAppointmentsView({
                         onClick={() =>
                           setExpandedId(isExpanded ? null : apt.appointmentId)
                         }
-                        className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
+                        className="inline-flex items-center gap-1 px-3.5 py-1.5 neu-btn-sm bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
                       >
                         <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
                         {isExpanded ? (
@@ -347,7 +351,7 @@ export function AppointmentHistoryView({
                       </h2>
                       <div className="flex items-center gap-1.5">
                         {apt.isSamplePreview && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-[8px] bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
                             Sample Preview
                           </span>
                         )}
@@ -369,7 +373,7 @@ export function AppointmentHistoryView({
                       onClick={() =>
                         setExpandedId(isExpanded ? null : apt.appointmentId)
                       }
-                      className="mt-2.5 inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
+                      className="mt-2.5 inline-flex items-center gap-1 px-3.5 py-1.5 neu-btn-sm bg-white border border-[#D4E2F4] hover:bg-[#F3F8FE] text-[#0E1B3B] text-[12px] font-bold neu-press-surface"
                     >
                       <span>{isExpanded ? 'Hide Details' : 'Appointment Details'}</span>
                       {isExpanded ? (
@@ -436,6 +440,8 @@ export function RemindersView({
         reminderLeadTime: apt.reminderLeadTime,
       });
       await onAppointmentsChanged();
+    } catch {
+      triggerErrorHaptic();
     } finally {
       setSavingId(null);
     }
@@ -454,6 +460,8 @@ export function RemindersView({
         reminderLeadTime: leadTime,
       });
       await onAppointmentsChanged();
+    } catch {
+      triggerErrorHaptic();
     } finally {
       setSavingId(null);
     }
@@ -462,6 +470,7 @@ export function RemindersView({
   const handleEnableBrowserNotifications = async () => {
     setFeedback(null);
     if (typeof window === 'undefined' || !('Notification' in window)) {
+      triggerErrorHaptic();
       setNotifPermission('unsupported');
       setFeedback({
         tone: 'error',
@@ -473,11 +482,13 @@ export function RemindersView({
       const result = await window.Notification.requestPermission();
       setNotifPermission(result);
       if (result === 'granted') {
+        triggerSuccessHaptic();
         setFeedback({
           tone: 'ok',
           text: 'Browser notifications enabled! You can send a test reminder below.',
         });
       } else {
+        triggerErrorHaptic();
         setFeedback({
           tone: 'error',
           text:
@@ -487,6 +498,7 @@ export function RemindersView({
         });
       }
     } catch {
+      triggerErrorHaptic();
       setFeedback({
         tone: 'error',
         text: 'Could not request browser notification permission in this embedded view.',
@@ -497,6 +509,7 @@ export function RemindersView({
   const handleSendTestNotification = () => {
     setFeedback(null);
     if (typeof window === 'undefined' || !('Notification' in window)) {
+      triggerErrorHaptic();
       setFeedback({
         tone: 'error',
         text: 'Browser notifications are unsupported here.',
@@ -504,6 +517,7 @@ export function RemindersView({
       return;
     }
     if (window.Notification.permission !== 'granted') {
+      triggerErrorHaptic();
       setFeedback({
         tone: 'error',
         text: 'Browser permission is not granted yet. Enable notifications first.',
@@ -517,8 +531,10 @@ export function RemindersView({
           ? `${nextApt.treatmentName} on ${formatDisplayDateParts(nextApt.appointmentDate).fullFormatted} at ${nextApt.startTime}`
           : 'Your appointment reminders are active.',
       });
+      triggerSuccessHaptic();
       setFeedback({ tone: 'ok', text: 'Test browser notification sent.' });
     } catch {
+      triggerErrorHaptic();
       setFeedback({
         tone: 'error',
         text: 'The browser blocked showing a notification inside this frame.',
@@ -552,7 +568,7 @@ export function RemindersView({
                 Appointment Notification Alerts
               </h2>
             </div>
-            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#E8F1FD] text-[#1E3A6D] capitalize">
+            <span className="text-[11px] font-bold px-2.5 py-1 neu-btn-sm bg-[#E8F1FD] text-[#1E3A6D] capitalize">
               {notifPermission === 'unsupported' ? 'Unsupported' : notifPermission}
             </span>
           </div>
@@ -565,6 +581,7 @@ export function RemindersView({
             {notifPermission !== 'granted' && notifPermission !== 'unsupported' && (
               <button
                 type="button"
+                data-haptic="deferred"
                 onClick={handleEnableBrowserNotifications}
                 className="neu-blue-btn rounded-[12px] px-4 py-2 text-[12.5px] font-extrabold text-white"
               >
@@ -574,6 +591,7 @@ export function RemindersView({
             {notifPermission === 'granted' && (
               <button
                 type="button"
+                data-haptic="deferred"
                 onClick={handleSendTestNotification}
                 className="neu-blue-btn rounded-[12px] px-4 py-2 text-[12.5px] font-extrabold text-white"
               >
@@ -615,7 +633,7 @@ export function RemindersView({
                         {apt.treatmentName}
                       </h3>
                       {apt.isSamplePreview && (
-                        <span className="px-2 py-0.5 rounded-full bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
+                        <span className="px-2 py-0.5 rounded-[8px] bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
                           Sample
                         </span>
                       )}
@@ -627,10 +645,11 @@ export function RemindersView({
 
                   <button
                     type="button"
+                    data-haptic="checkbox"
                     disabled={busy}
                     onClick={() => handleToggleReminder(apt)}
                     aria-pressed={apt.reminderEnabled}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-extrabold ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 neu-btn-sm text-[12px] font-extrabold ${
                       apt.reminderEnabled
                         ? 'neu-blue-btn text-white'
                         : 'bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] neu-press-surface'
@@ -664,9 +683,10 @@ export function RemindersView({
                       <button
                         key={lead}
                         type="button"
+                        data-haptic="selection"
                         disabled={busy}
                         onClick={() => handleChangeLeadTime(apt, lead)}
-                        className={`px-3 py-1.5 rounded-full text-[11.5px] font-bold ${
+                        className={`px-3 py-1.5 neu-btn-sm text-[11.5px] font-bold ${
                           active
                             ? 'bg-[#0070FF] text-white shadow-[0_3px_8px_rgba(0,112,255,0.25)] neu-press-solid-blue'
                             : 'bg-[#F5FAFF] border border-[#C8DAF0] text-[#425478] hover:border-[#8BC0FB] neu-press-surface'
@@ -788,6 +808,7 @@ export function CancelRescheduleView({
         endTime: newSlot.endTime,
       });
       await onAppointmentsChanged();
+      triggerSuccessHaptic();
       setActionMessage({
         tone: 'ok',
         text: `Appointment rescheduled to ${formatDisplayDateParts(newDate).fullFormatted} at ${newSlot.startTime}.`,
@@ -795,6 +816,7 @@ export function CancelRescheduleView({
       setActiveAction(null);
       setNewSlot(null);
     } catch (err) {
+      triggerErrorHaptic();
       setActionMessage({
         tone: 'error',
         text: err instanceof Error ? err.message : 'Unable to reschedule appointment.',
@@ -814,6 +836,7 @@ export function CancelRescheduleView({
         cancellationReason: cancelReason,
       });
       await onAppointmentsChanged();
+      triggerSuccessHaptic();
       setActionMessage({
         tone: 'ok',
         text: 'Appointment has been cancelled and moved to Appointment History.',
@@ -822,6 +845,7 @@ export function CancelRescheduleView({
       setCancelReason('');
       setSelectedId(null);
     } catch (err) {
+      triggerErrorHaptic();
       setActionMessage({
         tone: 'error',
         text: err instanceof Error ? err.message : 'Unable to cancel appointment.',
@@ -899,7 +923,7 @@ export function CancelRescheduleView({
                             {apt.treatmentName}
                           </h2>
                           {apt.isSamplePreview && (
-                            <span className="px-2 py-0.5 rounded-full bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
+                            <span className="px-2 py-0.5 rounded-[8px] bg-[#EDF3FB] border border-[#C8DAF0] text-[#425478] text-[10px] font-bold">
                               Sample Preview
                             </span>
                           )}
@@ -991,6 +1015,7 @@ export function CancelRescheduleView({
                   </button>
                   <button
                     type="button"
+                    data-haptic="deferred"
                     disabled={!newSlot || submitting}
                     onClick={handleConfirmReschedule}
                     className="flex-1 neu-blue-btn rounded-[14px] py-3 px-4 text-[14px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-60"
@@ -1056,6 +1081,7 @@ export function CancelRescheduleView({
                   </button>
                   <button
                     type="button"
+                    data-haptic="deferred"
                     disabled={submitting}
                     onClick={handleConfirmCancel}
                     className="flex-1 rounded-[13px] bg-[#C62828] hover:bg-[#B71C1C] py-2.5 px-4 text-[13.5px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-60 neu-press-solid-red"

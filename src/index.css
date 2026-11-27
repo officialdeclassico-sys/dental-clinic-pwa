@@ -10,6 +10,10 @@
   --deep-royal: #004ed6;
   --treatment-purple-top: #a768fa;
   --treatment-purple-bottom: #762de8;
+  --btn-radius-icon-sm: 9px;
+  --btn-radius-sm: 10px;
+  --btn-radius-md: 12px;
+  --btn-radius-lg: 14px;
 }
 
 html,
@@ -335,6 +339,23 @@ a[href],
   transform: translateY(0.5px) scale(0.84);
 }
 
+/* Global Rounded-Rectangle Button Shape Utilities (10px–14px, 9px square icon) */
+.neu-icon-square {
+  border-radius: var(--btn-radius-icon-sm);
+}
+
+.neu-btn-sm {
+  border-radius: var(--btn-radius-sm);
+}
+
+.neu-btn-md {
+  border-radius: var(--btn-radius-md);
+}
+
+.neu-btn-lg {
+  border-radius: var(--btn-radius-lg);
+}
+
 @media (hover: hover) {
   .neu-card-interactive:hover:not(:disabled):not(:active):not([data-neu-pressed="true"]) {
     box-shadow:
@@ -385,6 +406,38 @@ a[href],
 @media (min-width: 768px) {
   .main-bottom-clearance {
     padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Viewport-locked shell for Profile screens: disables overscroll/empty space when content fits while scrolling inside <main> on very short viewports */
+html.profile-viewport-lock,
+html.profile-viewport-lock body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.profile-shell-locked {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.profile-main-locked {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: clip;
+  overscroll-behavior: none;
+  padding-bottom: 0;
+  margin-bottom: calc(62px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 768px) {
+  .profile-main-locked {
+    margin-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
   }
 }
 

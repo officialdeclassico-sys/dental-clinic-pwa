@@ -14,6 +14,7 @@ import {
   saveCustomerProfile,
 } from '../data/appointmentsRepository';
 import { ReviewRecord, formatRelativeDate } from '../data/reviewsRepository';
+import { triggerErrorHaptic, triggerSuccessHaptic } from '../utils/haptics';
 
 export function validateProfileFields(input: {
   fullName: string;
@@ -92,13 +93,17 @@ export function PersonalDetailsView({
     }
 
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length > 0) {
+      triggerErrorHaptic();
+      return;
+    }
 
     const updated = saveCustomerProfile({
       fullName: fullName.trim(),
       mobileNumber: mobileNumber.trim(),
       email: trimmedEmail,
     });
+    triggerSuccessHaptic();
     onProfileUpdated(updated);
     setSavedNotice(true);
   };
@@ -221,6 +226,7 @@ export function PersonalDetailsView({
 
           <button
             type="submit"
+            data-haptic="deferred"
             className="w-full h-[50px] rounded-[15px] neu-blue-btn text-[15px] font-bold text-white"
           >
             Save Details
@@ -284,7 +290,7 @@ export function MyReviewsView({
         <button
           type="button"
           onClick={onAddReview}
-          className="neu-blue-btn rounded-full px-3.5 sm:px-4 py-2 text-[12.5px] sm:text-[13px] font-bold text-white inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+          className="neu-blue-btn neu-btn-md px-3.5 sm:px-4 py-2 text-[12.5px] sm:text-[13px] font-bold text-white inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
         >
           <SquarePen className="w-4 h-4" strokeWidth={2.2} />
           <span>Add Review</span>

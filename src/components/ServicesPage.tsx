@@ -12,6 +12,7 @@ import {
   getSortedServicesCatalog,
 } from '../data/servicesData';
 import { ServiceDetailsModal } from './ServiceDetailsModal';
+import { PaginationControls } from './PaginationControls';
 
 interface ServicesPageProps {
   onBack: () => void;
@@ -133,7 +134,7 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
             <button
               type="button"
               onClick={() => onBookAppointment(undefined)}
-              className="mt-3 sm:mt-4 neu-blue-btn rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-[12px] sm:text-[13.5px] font-extrabold text-white inline-flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-white"
+              className="mt-3 sm:mt-4 neu-blue-btn neu-btn-md px-4 py-2 sm:px-5 sm:py-2.5 text-[12px] sm:text-[13.5px] font-extrabold text-white inline-flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-white"
             >
               <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={2.3} />
               <span>Book Appointment</span>
@@ -159,6 +160,7 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
                 <button
                   key={feat.id}
                   type="button"
+                  data-haptic="selection"
                   aria-pressed={isSelected}
                   onClick={() =>
                     setActiveTrustId((prev) => (prev === feat.id ? null : feat.id))
@@ -226,7 +228,7 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
                     )}
                   </div>
 
-                  {/* Right Service Title + Bottom-Right Circular Chevron */}
+                  {/* Right Service Title + Bottom-Right Rounded-Square Chevron */}
                   <div className="relative z-10 flex-1 flex flex-col justify-between p-2.5 sm:p-3.5 pl-0.5 sm:pl-1">
                     <span className="text-[12.5px] sm:text-[14.5px] md:text-[15.5px] font-extrabold text-white leading-[1.18] drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] line-clamp-3">
                       {service.serviceName}
@@ -234,7 +236,7 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
 
                     <div className="flex justify-end">
                       <span
-                        className="neu-service-chevron w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-[#0E1B3B] shadow-[0_2px_6px_rgba(14,27,59,0.22)] flex items-center justify-center shrink-0"
+                        className="neu-service-chevron w-6 h-6 sm:w-7 sm:h-7 neu-icon-square bg-white text-[#0E1B3B] shadow-[0_2px_6px_rgba(14,27,59,0.22)] flex items-center justify-center shrink-0"
                         aria-hidden="true"
                       >
                         <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" strokeWidth={2.8} />
@@ -246,52 +248,15 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
             })}
           </div>
 
-          {/* Compact Circular Pagination (Chevron Controls Only, No Next/Previous Text) */}
-          <nav
-            aria-label="Services Pagination"
-            className="pt-0.5 flex items-center justify-center gap-3"
-          >
-            <button
-              type="button"
-              disabled={currentPage <= 1}
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              aria-label="Previous page"
-              className="w-9 h-9 rounded-full neu-circle-btn flex items-center justify-center text-[#0E1B3B] disabled:opacity-45 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-[#0070FF]"
-            >
-              <ChevronLeft className="w-4 h-4" strokeWidth={2.6} />
-            </button>
-
-            <div className="flex items-center gap-1.5">
-              {Array.from({ length: totalPages }).map((_, idx) => {
-                const pageNum = idx + 1;
-                const active = pageNum === currentPage;
-                return (
-                  <button
-                    key={pageNum}
-                    type="button"
-                    onClick={() => setCurrentPage(pageNum)}
-                    aria-label={`Services page ${pageNum}`}
-                    aria-current={active ? 'page' : undefined}
-                    className={`rounded-full neu-press-dot ${
-                      active
-                        ? 'w-2.5 h-2.5 bg-[#0070FF]'
-                        : 'w-2 h-2 bg-[#B7CEE8] hover:bg-[#7BA9E2]'
-                    }`}
-                  />
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              disabled={currentPage >= totalPages}
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              aria-label="Next page"
-              className="w-9 h-9 rounded-full neu-circle-btn flex items-center justify-center text-[#0E1B3B] disabled:opacity-45 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-[#0070FF]"
-            >
-              <ChevronRight className="w-4 h-4" strokeWidth={2.6} />
-            </button>
-          </nav>
+          {/* Compact Rounded-Square Pagination matching Reviews */}
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            navAriaLabel="Services Pagination"
+            pageLabelPrefix="Services page"
+            inactiveDotClassName="bg-[#B7CEE8] hover:bg-[#7BA9E2]"
+          />
         </section>
 
         {/* Bottom Consultation Banner */}
@@ -319,7 +284,7 @@ export function ServicesPage({ onBack, onBookAppointment }: ServicesPageProps) {
               <button
                 type="button"
                 onClick={() => onBookAppointment(undefined)}
-                className="neu-blue-btn rounded-full px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-white inline-flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+                className="neu-blue-btn neu-btn-md px-4 py-2 text-[12px] sm:text-[13px] font-extrabold text-white inline-flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#0070FF]"
               >
                 <Calendar className="w-3.5 h-3.5" strokeWidth={2.3} />
                 <span>Consult Now</span>

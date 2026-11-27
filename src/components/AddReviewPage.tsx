@@ -17,6 +17,7 @@ import {
   createReview,
   validateAndExtractVideoMeta,
 } from '../data/reviewsRepository';
+import { triggerErrorHaptic, triggerSuccessHaptic } from '../utils/haptics';
 
 interface AddReviewPageProps {
   onBack: () => void;
@@ -62,6 +63,7 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
     const files = Array.from(fileList);
 
     if (imageUrls.length + files.length > MAX_REVIEW_PHOTOS) {
+      triggerErrorHaptic();
       setErrorMsg(
         `You can upload up to ${MAX_REVIEW_PHOTOS} photos maximum (currently ${imageUrls.length} attached).`
       );
@@ -78,6 +80,7 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
       }
       setImageUrls((prev) => [...prev, ...processed]);
     } catch (err) {
+      triggerErrorHaptic();
       setErrorMsg(
         err instanceof Error ? err.message : 'Unable to process selected photo(s).'
       );
@@ -103,6 +106,7 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
       setVideoThumbnailUrl(meta.thumbnailDataUrl);
       setVideoDuration(meta.durationSeconds);
     } catch (err) {
+      triggerErrorHaptic();
       setErrorMsg(err instanceof Error ? err.message : 'Invalid video selection.');
     } finally {
       setMediaBusy(false);
@@ -131,16 +135,19 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
     if (submitLockRef.current || isSubmitting || mediaBusy) return;
 
     if (rating < 1 || rating > 5) {
+      triggerErrorHaptic();
       setErrorMsg('Please select a star rating before submitting your review.');
       return;
     }
     if (reviewText.length > MAX_REVIEW_CHARS) {
+      triggerErrorHaptic();
       setErrorMsg(
         `Your written review is ${reviewText.length} characters. Please keep it within ${MAX_REVIEW_CHARS} characters.`
       );
       return;
     }
     if (imageUrls.length > MAX_REVIEW_PHOTOS) {
+      triggerErrorHaptic();
       setErrorMsg(`Maximum ${MAX_REVIEW_PHOTOS} photos are allowed.`);
       return;
     }
@@ -157,11 +164,13 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
         videoFile,
         videoThumbnailUrl,
       });
+      triggerSuccessHaptic();
       setSubmittedRecord(created);
       window.setTimeout(() => {
         onReviewSubmitted(created);
       }, 650);
     } catch (err) {
+      triggerErrorHaptic();
       setErrorMsg(
         err instanceof Error ? err.message : 'Unable to submit your review. Please try again.'
       );
@@ -206,7 +215,7 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
             <button
               type="button"
               onClick={() => onReviewSubmitted(submittedRecord)}
-              className="neu-blue-btn rounded-full px-5 py-2.5 text-[13.5px] font-extrabold text-white"
+              className="neu-blue-btn neu-btn-md px-5 py-2.5 text-[13.5px] font-extrabold text-white"
             >
               View Reviews Now
             </button>
@@ -412,7 +421,7 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
                       type="button"
                       onClick={handleRemoveVideo}
                       aria-label="Remove selected video"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FEECEC] text-[#B91C1C] text-[11px] font-bold shrink-0 neu-press-surface"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 neu-btn-sm bg-[#FEECEC] text-[#B91C1C] text-[11px] font-bold shrink-0 neu-press-surface"
                     >
                       <X className="w-3 h-3" />
                       Remove
@@ -442,8 +451,9 @@ export function AddReviewPage({ onBack, onReviewSubmitted }: AddReviewPageProps)
             {/* Submit Review CTA */}
             <button
               type="submit"
+              data-haptic="deferred"
               disabled={isSubmitting || mediaBusy}
-              className="w-full neu-blue-btn rounded-full py-3.5 px-6 text-[16px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-65 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
+              className="w-full neu-blue-btn neu-btn-lg py-3.5 px-6 text-[16px] font-extrabold text-white flex items-center justify-center gap-2 disabled:opacity-65 focus-visible:outline-2 focus-visible:outline-[#0070FF]"
             >
               {isSubmitting ? (
                 <>

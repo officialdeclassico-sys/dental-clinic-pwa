@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AboutUsPage } from './components/AboutUsPage';
 import { AddReviewPage } from './components/AddReviewPage';
 import {
@@ -125,7 +125,23 @@ export default function App() {
   });
 
   const currentPage = pageStack[pageStack.length - 1] ?? 'home';
+  const isProfileViewportLocked = currentPage === 'profile';
+  const mainContainerRef = useRef<HTMLElement | null>(null);
   const t = UI_STRINGS[language];
+
+  useEffect(() => {
+    const rootEl = document.documentElement;
+    if (isProfileViewportLocked) {
+      rootEl.classList.add('profile-viewport-lock');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      mainContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+    } else {
+      rootEl.classList.remove('profile-viewport-lock');
+    }
+    return () => {
+      rootEl.classList.remove('profile-viewport-lock');
+    };
+  }, [isProfileViewportLocked, customerProfile.isLoggedIn]);
 
   const refreshAppointments = useCallback(async () => {
     try {
@@ -256,8 +272,17 @@ export default function App() {
             : 'home';
 
   return (
-    <div className="app-container min-h-screen w-full overflow-x-clip bg-[#E6F1FC] text-[#0E1B3B] flex flex-col">
-      <main className="app-scroll-container w-full max-w-[1440px] mx-auto px-3 sm:px-6 md:px-8 lg:px-10 main-bottom-clearance flex-1">
+    <div
+      className={`app-container w-full overflow-x-clip bg-[#E6F1FC] text-[#0E1B3B] flex flex-col ${
+        isProfileViewportLocked ? 'profile-shell-locked' : 'min-h-screen'
+      }`}
+    >
+      <main
+        ref={mainContainerRef}
+        className={`app-scroll-container w-full max-w-[1440px] mx-auto px-3 sm:px-6 md:px-8 lg:px-10 ${
+          isProfileViewportLocked ? 'profile-main-locked' : 'main-bottom-clearance flex-1'
+        }`}
+      >
         {currentPage === 'about' ? (
           <AboutUsPage visitId={aboutVisitId} onBack={navigateBack} />
         ) : currentPage === 'contact' ? (
