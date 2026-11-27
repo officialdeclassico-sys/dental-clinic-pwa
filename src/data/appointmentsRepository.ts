@@ -46,6 +46,8 @@ export interface CustomerProfile {
   fullName: string;
   mobileNumber: string;
   email: string;
+  isLoggedIn?: boolean;
+  consentAcceptedAt?: string;
 }
 
 export interface ClinicBranchOption {
@@ -280,6 +282,7 @@ export function getSavedCustomerProfile(): CustomerProfile {
     fullName: '',
     mobileNumber: '',
     email: '',
+    isLoggedIn: false,
   };
   if (typeof window === 'undefined') return fallback;
   try {
@@ -291,6 +294,8 @@ export function getSavedCustomerProfile(): CustomerProfile {
       fullName: parsed.fullName || '',
       mobileNumber: parsed.mobileNumber || '',
       email: parsed.email || '',
+      isLoggedIn: Boolean(parsed.isLoggedIn),
+      consentAcceptedAt: parsed.consentAcceptedAt || undefined,
     };
   } catch {
     return fallback;
@@ -304,6 +309,8 @@ export function saveCustomerProfile(profile: Partial<CustomerProfile>): Customer
     fullName: profile.fullName ?? current.fullName,
     mobileNumber: profile.mobileNumber ?? current.mobileNumber,
     email: profile.email ?? current.email,
+    isLoggedIn: profile.isLoggedIn ?? current.isLoggedIn,
+    consentAcceptedAt: profile.consentAcceptedAt ?? current.consentAcceptedAt,
   };
   if (typeof window !== 'undefined') {
     try {
@@ -313,6 +320,36 @@ export function saveCustomerProfile(profile: Partial<CustomerProfile>): Customer
     }
   }
   return updated;
+}
+
+export function createProfileSession(input: {
+  fullName: string;
+  mobileNumber: string;
+}): CustomerProfile {
+  const current = getSavedCustomerProfile();
+  const customerId =
+    current.customerId && current.customerId !== 'cust-local-001'
+      ? current.customerId
+      : `cust-${Date.now()}`;
+
+  return saveCustomerProfile({
+    customerId,
+    fullName: input.fullName.trim(),
+    mobileNumber: input.mobileNumber.trim(),
+    isLoggedIn: true,
+    consentAcceptedAt: new Date().toISOString(),
+  });
+}
+
+export function clearCustomerProfileSession(): CustomerProfile {
+  if (typeof window !== 'undefined') {
+    try {
+      window.localStorage.removeItem(STORAGE_PROFILE_KEY);
+    } catch {
+      // Ignore storage error
+    }
+  }
+  return getSavedCustomerProfile();
 }
 
 export function parseTimeToMinutes(time12h: string): number {

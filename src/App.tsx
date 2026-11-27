@@ -15,8 +15,11 @@ import { ContactUsPage } from './components/ContactUsPage';
 import { FaqsPage } from './components/FaqsPage';
 import { HeroCarousel } from './components/HeroCarousel';
 import { ActiveModalState, HomepageModals } from './components/HomepageModals';
+import { LegalDocumentPage } from './components/LegalDocumentPage';
 import { LiveQueueCard } from './components/LiveQueueCard';
 import { NewPatientOfferBanner } from './components/NewPatientOfferBanner';
+import { ProfileDraftState, ProfilePage } from './components/ProfilePage';
+import { MyReviewsView, PersonalDetailsView } from './components/ProfileSubViews';
 import { ReviewsPage } from './components/ReviewsPage';
 import { ServicesPage } from './components/ServicesPage';
 import { ShortcutCards } from './components/ShortcutCards';
@@ -24,7 +27,11 @@ import { TreatmentsSection } from './components/TreatmentsSection';
 import {
   AppointmentRecord,
   BookingTreatmentId,
+  CustomerProfile,
+  clearCustomerProfileSession,
+  createProfileSession,
   fetchAppointments,
+  getSavedCustomerProfile,
 } from './data/appointmentsRepository';
 import {
   ClinicNotification,
@@ -54,7 +61,14 @@ type PageId =
   | 'my-appointments'
   | 'appointment-history'
   | 'reminders'
-  | 'cancel-reschedule';
+  | 'cancel-reschedule'
+  | 'profile'
+  | 'terms-document'
+  | 'privacy-document'
+  | 'personal-details'
+  | 'my-reviews'
+  | 'profile-reminders'
+  | 'profile-contact';
 
 const APPOINTMENT_PAGES: PageId[] = [
   'appointments',
@@ -63,6 +77,16 @@ const APPOINTMENT_PAGES: PageId[] = [
   'appointment-history',
   'reminders',
   'cancel-reschedule',
+];
+
+const PROFILE_PAGES: PageId[] = [
+  'profile',
+  'terms-document',
+  'privacy-document',
+  'personal-details',
+  'my-reviews',
+  'profile-reminders',
+  'profile-contact',
 ];
 
 export default function App() {
@@ -89,6 +113,16 @@ export default function App() {
   const [reviews, setReviews] = useState<ReviewRecord[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState<boolean>(true);
   const [justPublishedReview, setJustPublishedReview] = useState<boolean>(false);
+
+  // Profile state (persisted in localStorage) & draft state preserved across document views
+  const [customerProfile, setCustomerProfile] = useState<CustomerProfile>(() =>
+    getSavedCustomerProfile()
+  );
+  const [profileDraft, setProfileDraft] = useState<ProfileDraftState>({
+    fullName: '',
+    mobileNumber: '',
+    consentAccepted: false,
+  });
 
   const currentPage = pageStack[pageStack.length - 1] ?? 'home';
   const t = UI_STRINGS[language];
@@ -201,17 +235,25 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'auto' });
       return;
     }
+    if (tabId === 'profile') {
+      setModal({ type: 'none' });
+      setPageStack(['home', 'profile']);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
     setModal({ type: 'navPlaceholder', tabId });
   };
 
   const activeNavTab: NavTabId =
     modal.type === 'navPlaceholder'
       ? modal.tabId
-      : currentPage === 'services'
-        ? 'services'
-        : APPOINTMENT_PAGES.includes(currentPage)
-          ? 'appointments'
-          : 'home';
+      : PROFILE_PAGES.includes(currentPage)
+        ? 'profile'
+        : currentPage === 'services'
+          ? 'services'
+          : APPOINTMENT_PAGES.includes(currentPage)
+            ? 'appointments'
+            : 'home';
 
   return (
     <div className="app-container min-h-screen w-full overflow-x-clip bg-[#E6F1FC] text-[#0E1B3B] flex flex-col">
@@ -290,6 +332,7 @@ export default function App() {
             }}
             onBookingCreated={() => {
               refreshAppointments();
+              setCustomerProfile(getSavedCustomerProfile());
             }}
             onViewMyAppointments={() => {
               setPageStack(['home', 'appointments', 'my-appointments']);
@@ -313,7 +356,7 @@ export default function App() {
             loading={appointmentsLoading}
             onBack={navigateBack}
           />
-        ) : currentPage === 'reminders' ? (
+        ) : currentPage === 'reminders' || currentPage === 'profile-reminders' ? (
           <RemindersView
             appointments={appointments}
             onBack={navigateBack}
@@ -326,6 +369,57 @@ export default function App() {
             onBack={navigateBack}
             onAppointmentsChanged={refreshAppointments}
           />
+        ) : currentPage === 'profile' ? (
+          <ProfilePage
+            profile={customerProfile}
+            draft={profileDraft}
+            onChangeDraft={setProfileDraft}
+            onBack={navigateBack}
+            onOpenTerms={() => navigateTo('terms-document')}
+            onOpenPrivacy={() => navigateTo('privacy-document')}
+            onCreateProfile={({ fullName, mobileNumber }) => {
+              const created = createProfileSession({ fullName, mobileNumber });
+              setCustomerProfile(created);
+              setProfileDraft({
+                fullName: '',
+                mobileNumber: '',
+                consentAccepted: false,
+              });
+            }}
+            onLogout={() => {
+              const cleared = clearCustomerProfileSession();
+              setCustomerProfile(cleared);
+              setProfileDraft({
+                fullName: '',
+                mobileNumber: '',
+                consentAccepted: false,
+              });
+            }}
+            onOpenPersonalDetails={() => navigateTo('personal-details')}
+            onOpenMyReviews={() => navigateTo('my-reviews')}
+            onOpenReminders={() => navigateTo('profile-reminders')}
+            onOpenContactSupport={() => navigateTo('profile-contact')}
+          />
+        ) : currentPage === 'terms-document' ? (
+          <LegalDocumentPage documentType="terms" onBack={navigateBack} />
+        ) : currentPage === 'privacy-document' ? (
+          <LegalDocumentPage documentType="privacy" onBack={navigateBack} />
+        ) : currentPage === 'personal-details' ? (
+          <PersonalDetailsView
+            profile={customerProfile}
+            onBack={navigateBack}
+            onProfileUpdated={setCustomerProfile}
+          />
+        ) : currentPage === 'my-reviews' ? (
+          <MyReviewsView
+            profile={customerProfile}
+            reviews={reviews}
+            onBack={navigateBack}
+            onAddReview={() => navigateTo('add-review')}
+            onViewAllReviews={() => navigateTo('reviews')}
+          />
+        ) : currentPage === 'profile-contact' ? (
+          <ContactUsPage onBack={navigateBack} />
         ) : (
           <div className="space-y-3.5 sm:space-y-4 md:space-y-5">
             <ClinicHeader

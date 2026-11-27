@@ -218,3 +218,113 @@ export function TreatmentCosmetic3D({ className = 'w-14 h-12' }: { className?: s
     </svg>
   );
 }
+
+export function ProfileToothHeroIllustration({
+  className = 'w-[164px] h-[164px] sm:w-[178px] sm:h-[178px]',
+}: {
+  className?: string;
+}) {
+  return (
+    <svg viewBox="0 0 180 180" fill="none" className={className} aria-hidden="true">
+      <defs>
+        <radialGradient id="profileOrbBg" cx="45%" cy="40%" r="58%">
+          <stop offset="0%" stopColor="#EFF6FF" stopOpacity="0.95" />
+          <stop offset="70%" stopColor="#DCEBFF" stopOpacity="0.72" />
+          <stop offset="100%" stopColor="#CFE4FE" stopOpacity="0.48" />
+        </radialGradient>
+        <radialGradient id="profileToothGrad" cx="38%" cy="28%" r="72%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="58%" stopColor="#F3F8FF" />
+          <stop offset="86%" stopColor="#D4E5FC" />
+          <stop offset="100%" stopColor="#B8D2F8" />
+        </radialGradient>
+        <linearGradient id="profileRingGrad" x1="28" y1="118" x2="152" y2="62" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#0D78FF" />
+          <stop offset="50%" stopColor="#35B6FF" />
+          <stop offset="100%" stopColor="#0066F5" />
+        </linearGradient>
+        <linearGradient id="profileSparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#4EC4FF" />
+          <stop offset="100%" stopColor="#147BFF" />
+        </linearGradient>
+        <filter id="profileRingShadow" x="-15%" y="-15%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="3" stdDeviation="2.5" floodColor="#0052CC" floodOpacity="0.24" />
+        </filter>
+        <filter id="profileToothShadow" x="-15%" y="-15%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#7AAAE6" floodOpacity="0.28" />
+        </filter>
+      </defs>
+
+      {/* Soft circular frosted disc */}
+      <circle
+        cx="90"
+        cy="92"
+        r="64"
+        fill="url(#profileOrbBg)"
+        stroke="#FFFFFF"
+        strokeOpacity="0.88"
+        strokeWidth="2"
+      />
+
+      {/* Back half of tilted blue orbiting ring */}
+      <path
+        d="M 41 112 C 30 96, 56 68, 96 60 C 127 54, 146 61, 143 74"
+        stroke="url(#profileRingGrad)"
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        opacity="0.88"
+      />
+
+      {/* 3D White Tooth */}
+      <g filter="url(#profileToothShadow)">
+        <path
+          d="M 67 45 C 53 45, 44 55, 44 69 C 44 84, 51 96, 55 113 C 58 126, 61 142, 69 142 C 76 142, 79 127, 84 117 C 86 112, 88 110, 90 110 C 92 110, 94 112, 96 117 C 101 127, 104 142, 111 142 C 119 142, 122 126, 125 113 C 129 96, 136 84, 136 69 C 136 55, 127 45, 113 45 C 103 45, 97 50, 92 52.5 C 90.7 53.2, 89.3 53.2, 88 52.5 C 83 50, 77 45, 67 45 Z"
+          fill="url(#profileToothGrad)"
+          stroke="#FFFFFF"
+          strokeWidth="1.5"
+        />
+        {/* Subtle gloss highlight on left tooth crown */}
+        <ellipse
+          cx="62"
+          cy="66"
+          rx="6.5"
+          ry="12"
+          transform="rotate(-14 62 66)"
+          fill="#FFFFFF"
+          fillOpacity="0.72"
+        />
+      </g>
+
+      {/* Front half of tilted blue orbiting ring crossing in front of tooth */}
+      <g filter="url(#profileRingShadow)">
+        <path
+          d="M 41 112 C 51 124, 86 112, 113 98 C 134 87, 145 79, 143 72"
+          stroke="url(#profileRingGrad)"
+          strokeWidth="7.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 45 112 C 58 120, 88 109, 113 96 C 128 88, 138 81, 140 75"
+          stroke="#8AD8FF"
+          strokeOpacity="0.6"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </g>
+
+      {/* 4-point blue sparkles matching reference placement */}
+      <path
+        d="M 141 24 L 144.4 33.6 L 154 37 L 144.4 40.4 L 141 50 L 137.6 40.4 L 128 37 L 137.6 33.6 Z"
+        fill="url(#profileSparkleGrad)"
+      />
+      <path
+        d="M 157 49 L 158.9 54.1 L 164 56 L 158.9 57.9 L 157 63 L 155.1 57.9 L 150 56 L 155.1 54.1 Z"
+        fill="url(#profileSparkleGrad)"
+      />
+      <path
+        d="M 27 125 L 29.2 130.8 L 35 133 L 29.2 135.2 L 27 141 L 24.8 135.2 L 19 133 L 24.8 130.8 Z"
+        fill="url(#profileSparkleGrad)"
+      />
+    </svg>
+  );
+}
